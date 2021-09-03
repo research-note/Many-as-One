@@ -6,13 +6,13 @@ There's a lot of AI framework for parallel & heterogeneous-based distributed com
 
 Also, we need container, k8s friendly cloud native framework.
 
-## Webapp(Frontend)
+## Webapp - Frontend
 
 Web application visualize your model graph and provide interface that communicate with neural network handle each layer or unit.
 
 system monitoring each computing nodes that have unit are also planned.
 
-## Backend(neural network)
+## Neural Network - Backend
 
 You can scale out nerual network. this loadbalance your learning data, and do reduce learning time.
 
@@ -20,19 +20,25 @@ You can scale out nerual network. this loadbalance your learning data, and do re
 
 ## Open sources used for parallel & heterogeneous-based distributed computing
 
-First, we need no more `CUDA`! and `.cl` for type safe coding.
+### Tensor programming
 
 ![SYCL](https://raw.githubusercontent.com/research-note/Many-as-One/master/SYCL_logo.svg.png?sanitize=true)
 
+First, we don't need `CUDA`, no more `.cl` codes for type safe coding.
+
 ![sycl](https://raw.githubusercontent.com/research-note/Many-as-One/master/2020-05-sycl-landing-page-01_3.jpg?sanitize=true)
 
-then, we select `Eigen` have tensor that have implemented SYCL backend.
+Then, we select `Eigen` tensor that have implemented SYCL backend.
 
 ![Eigen](https://raw.githubusercontent.com/research-note/Many-as-One/master/Eigen_Silly_Professor_135x135.png?sanitize=true)
 
-Second, we need superfast & GPU accelated generously used colmnar Format.
+### Handle datas with Colomnar DB format
+
+Second, we need superfast, GPU accelated size optimized colmnar Format.
 
 ![Apache Arrow](https://raw.githubusercontent.com/research-note/Many-as-One/master/arrow-inverse.png?sanitize=true)
+
+### Distributed build system
 
 Third, we need distribute compile system for fast build and unit test future situation.
 
