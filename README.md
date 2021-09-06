@@ -1,59 +1,83 @@
 # Many as One
 
-We want supercomputed neural network that parallel(core per multithread, SIMD or AVX vectorized instructions), heterogeneous(FPGA or GPU accelations)-based distributed network processing on superclusters.
+Cloud native Superclusters supercomputed neural network parallel(core/threads, TBB, vectorized instructions), heterogeneous(FPGA or GPU accelations) computed.
 
-There's a lot of AI framework for parallel & heterogeneous-based distributed computing. but this framework needed specific machine that vecdor dependent software. otherwise, we need to provide an environment where low-performance machines and high-performance machines can coexist and cooperative each other in distributed neural network. futher more, user frontend should be able to utilize a high-performance backend in a convenient web-based interface on any playform.
+There's a lot of NN framework for parallel, heterogeneous computed on distributed computing. but this frameworks needed specific machine that vecdor dependent software. otherwise, we need to provide an environment where low-performance machines and high-performance machines can coexist and cooperative each other in distributed neural network. futher more, user frontend should be able to utilize a high-performance backend in a convenient web-based interface on any playform.
 
 Also, we need container, k8s friendly cloud native framework.
 
 ## Webapp - Frontend
 
-Web application visualize your model graph and provide interface that communicate with neural network handle each layer or unit.
+<p align="center">
+    <img width=600 src="dense-layer.png" alt="Dense layer">
+</p>
 
-system monitoring each computing nodes that have unit are also planned.
+Web application visualize your model graph and provide interface that communicate with neural network handle each layer or unit. system monitoring each computing nodes that have unit are also planned.
 
 ## Neural Network - Backend
 
-You can scale out nerual network. this loadbalance your learning data, and do reduce learning time.
-
-![independent from machine vendors](https://raw.githubusercontent.com/research-note/Many-as-One/master/Linus-Torvalds-Fuck-You-Nvidia.jpg?sanitize=true)
+Scale out nerual network. loadbalance your trainning / test input big datas, this will reduce the NN's learning time.
 
 ### Tensor programming
 
-![SYCL](https://raw.githubusercontent.com/research-note/Many-as-One/master/SYCL_logo.svg.png?sanitize=true)
+<img width=200 align="left" src="header-logo.png" alt="SYCL">
 
-First, we don't need `CUDA`, no more `.cl` codes for type safe coding.
+We don't need `CUDA` and no more `.cl` codes for type safe.
 
-![sycl](https://raw.githubusercontent.com/research-note/Many-as-One/master/2020-05-sycl-landing-page-01_3.jpg?sanitize=true)
+---
 
-Then, we select `Eigen` tensor that have implemented SYCL backend.
+<img width=200 align="right" src="Linus-Torvalds-Fuck-You-Nvidia.jpg" alt="Independent from machine vendors">
 
-![Eigen](https://raw.githubusercontent.com/research-note/Many-as-One/master/Eigen_Silly_Professor_135x135.png?sanitize=true)
+We must break free from lock-in to specific vendors.
+
+---
+
+<p align="center">
+    <img width=600 src="2020-05-sycl-landing-page-01_3.jpg" alt="sycl flow">
+</p>
+
+---
+
+<img align="left" src="Eigen_Silly_Professor_135x135.png" alt="Eigen">
+
+Thus, we select `Eigen` tensor that have implemented SYCL backend.
+
+---
 
 ### Handle datas with Colomnar DB format
 
+<img align="left" width=400 src="arrow-inverse.png" alt="Eigen">
+
 We need superfast, GPU accelated size optimized colmnar Format.
 
-![Apache Arrow](https://raw.githubusercontent.com/research-note/Many-as-One/master/arrow-inverse.png?sanitize=true)
+---
 
 ### boost::asio based event driven network
 
 We can maximize network communication performance using boost::asio event driven programming model in distributed neural network.
 
+---
 ### Distributed build system
+
+<img align="left" width=400 src="xenonstack-advantages-of-bazel.png" alt="Eigen">
 
 We compile system for fast build and unit test future situation.
 
-![Bazel](https://raw.githubusercontent.com/research-note/Many-as-One/master/xenonstack-advantages-of-bazel.png?sanitize=true)
+---
 
 ## Reference
 
-[SYCL](https://en.wikipedia.org/wiki/SYCL)
+### Frontend
 
-[Apache Arrow](https://en.wikipedia.org/wiki/Apache_Arrow)
+- [neo4j-3d-force-graph](https://github.com/jexp/neo4j-3d-force-graph)
+- [visualizing-graphs-in-3d-with-webgl](https://neo4j.com/developer-blog/visualizing-graphs-in-3d-with-webgl/)
 
-[Eigen](https://en.wikipedia.org/wiki/Eigen_(C%2B%2B_library))
+---
+### Backend
 
-[boost C++ Libraries](https://www.boost.org/)
-
-[Bazel](https://en.wikipedia.org/wiki/Bazel_(software))
+- [oneTBB](https://github.com/oneapi-src/oneTBB)
+- [SYCL](https://en.wikipedia.org/wiki/SYCL)
+- [Apache Arrow](https://en.wikipedia.org/wiki/Apache_Arrow)
+- [Eigen](https://en.wikipedia.org/wiki/Eigen_(C%2B%2B_library))
+- [boost C++ Libraries](https://www.boost.org/)
+- [Bazel](https://en.wikipedia.org/wiki/Bazel_(software))
