@@ -20,13 +20,13 @@ Scale out nerual network. loadbalance your trainning / test input big datas, thi
 
 ### Tensor programming
 
+#### SYCL based Eigen
+
 <img width=100 align="left" src="header-logo.png" alt="SYCL">
 
 We don't need `CUDA` and no more `.cl` codes for type safe.
 <br>
 <br>
-
----
 
 <img width=100 align="right" src="Linus-Torvalds-Fuck-You-Nvidia.jpg" alt="Independent from machine vendors">
 
@@ -34,15 +34,11 @@ We must break free from lock-in to specific vendors.
 <br>
 <br>
 
----
-
 <img align="left" width=50 src="Eigen_Silly_Professor_135x135.png" alt="Eigen">
 
 Thus, we select `Eigen` tensor that have implemented SYCL backend.
 <br>
 <br>
-
----
 
 <p align="center">
     <img width=600 src="2020-05-sycl-landing-page-01_3.jpg" alt="sycl flow">
