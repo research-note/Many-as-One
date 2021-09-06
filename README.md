@@ -89,7 +89,6 @@ We can maximize network communication performance using boost::asio event driven
 - [3d-force-graph](https://github.com/vasturiano/3d-force-graph)
 - [visualizing-graphs-in-3d-with-webgl](https://neo4j.com/developer-blog/visualizing-graphs-in-3d-with-webgl/)
 
----
 ### Backend
 
 - [oneTBB](https://github.com/oneapi-src/oneTBB)
