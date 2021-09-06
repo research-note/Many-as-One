@@ -9,7 +9,7 @@ Also, we need container, k8s friendly cloud native framework.
 ## Webapp - Frontend
 
 <p align="center">
-    <img width=600 src="dense-layer.png" alt="Dense layer">
+    <img width=400 src="dense-layer.png" alt="Dense layer">
 </p>
 
 Web application visualize your model graph and provide interface that communicate with neural network handle each layer or unit. system monitoring each computing nodes that have unit are also planned.
@@ -20,15 +20,27 @@ Scale out nerual network. loadbalance your trainning / test input big datas, thi
 
 ### Tensor programming
 
-<img width=200 align="left" src="header-logo.png" alt="SYCL">
+<img width=100 align="left" src="header-logo.png" alt="SYCL">
 
 We don't need `CUDA` and no more `.cl` codes for type safe.
+<br>
+<br>
 
 ---
 
-<img width=200 align="right" src="Linus-Torvalds-Fuck-You-Nvidia.jpg" alt="Independent from machine vendors">
+<img width=100 align="right" src="Linus-Torvalds-Fuck-You-Nvidia.jpg" alt="Independent from machine vendors">
 
 We must break free from lock-in to specific vendors.
+<br>
+<br>
+
+---
+
+<img align="left" width=50 src="Eigen_Silly_Professor_135x135.png" alt="Eigen">
+
+Thus, we select `Eigen` tensor that have implemented SYCL backend.
+<br>
+<br>
 
 ---
 
@@ -38,31 +50,31 @@ We must break free from lock-in to specific vendors.
 
 ---
 
-<img align="left" src="Eigen_Silly_Professor_135x135.png" alt="Eigen">
+## Handle datas with `Colomnar DB` format
 
-Thus, we select `Eigen` tensor that have implemented SYCL backend.
-
----
-
-### Handle datas with Colomnar DB format
-
-<img align="left" width=400 src="arrow-inverse.png" alt="Eigen">
+<img align="left" width=200 src="arrow-inverse.png" alt="Eigen">
 
 We need superfast, GPU accelated size optimized colmnar Format.
+<br>
+<br>
+<br>
 
 ---
 
-### boost::asio based event driven network
+## boost::asio based `event driven network`
 
 We can maximize network communication performance using boost::asio event driven programming model in distributed neural network.
 
 ---
-### Distributed build system
+## Distributed build system
 
-<img align="left" width=400 src="xenonstack-advantages-of-bazel.png" alt="Eigen">
+<img align="left" width=200 src="xenonstack-advantages-of-bazel.png" alt="Eigen">
 
 We compile system for fast build and unit test future situation.
-
+<br>
+<br>
+<br>
+<br>
 ---
 
 ## Reference
