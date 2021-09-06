@@ -86,7 +86,7 @@ We can maximize network communication performance using boost::asio event driven
 
 ### Frontend
 
-- [neo4j-3d-force-graph](https://github.com/jexp/neo4j-3d-force-graph)
+- [3d-force-graph](https://github.com/vasturiano/3d-force-graph)
 - [visualizing-graphs-in-3d-with-webgl](https://neo4j.com/developer-blog/visualizing-graphs-in-3d-with-webgl/)
 
 ---
