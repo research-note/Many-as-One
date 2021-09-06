@@ -68,9 +68,14 @@ We can maximize network communication performance using boost::asio event driven
 ---
 ## Distributed build system
 
-<img align="left" width=200 src="xenonstack-advantages-of-bazel.png" alt="Eigen">
+<img align="left" width=300 src="xenonstack-advantages-of-bazel.png" alt="Eigen">
 
-We compile system for fast build and unit test future situation.
+<p>
+    To deal with future large distributed compile, use bazel fast build and unit test.
+</p>
+
+<br>
+<br>
 <br>
 <br>
 <br>
