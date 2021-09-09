@@ -6,7 +6,7 @@ There's a lot of NN framework for parallel, heterogeneous computed on distribute
 
 Also, we need container, k8s friendly cloud native framework.
 
-## Webapp - Frontend
+# Webapp - Frontend
 
 <p align="center">
     <img width=400 src="dense-layer.png" alt="Dense layer">
@@ -14,29 +14,34 @@ Also, we need container, k8s friendly cloud native framework.
 
 Web application visualize your model graph and provide interface that communicate with neural network handle each layer or unit. system monitoring each computing nodes that have unit are also planned.
 
-## Neural Network - Backend
+# Neural Network - Backend
 
-Scale out nerual network. loadbalance your trainning / test input big datas, this will reduce the NN's learning time.
+Scale out nerual network on cloud or on premise cluster based computing. loadbalance your trainning / test processes from big data input. so, this will reduce the NN's learning time. we quickly decide insight we want.
 
-### Tensor programming
-
-#### SYCL based Eigen
+## SYCL based tensor programming by Eigen
 
 <img width=100 align="left" src="header-logo.png" alt="SYCL">
 
-We don't need `CUDA` and no more `.cl` codes for type safe.
+<p>
+    We don't need on tensor programming `CUDA`. we need type safe program so, no more `.cl` codes from `OpenCL`.
+</p>
+
 <br>
 <br>
 
 <img width=100 align="right" src="Linus-Torvalds-Fuck-You-Nvidia.jpg" alt="Independent from machine vendors">
+<p>
+    We must break free from lock-in to specific GPU vendors.
+</p>
 
-We must break free from lock-in to specific vendors.
 <br>
 <br>
 
 <img align="left" width=50 src="Eigen_Silly_Professor_135x135.png" alt="Eigen">
+<p>
+    Thus, we select `Eigen` tensor that have implemented SYCL backend for heterogeneous computing.
+</p>
 
-Thus, we select `Eigen` tensor that have implemented SYCL backend.
 <br>
 <br>
 
@@ -44,51 +49,45 @@ Thus, we select `Eigen` tensor that have implemented SYCL backend.
     <img width=600 src="2020-05-sycl-landing-page-01_3.jpg" alt="sycl flow">
 </p>
 
----
-
 ## Handle datas with `Colomnar DB` format
 
-<img align="left" width=200 src="arrow-inverse.png" alt="Eigen">
+<img align="left" width=200 src="arrow-inverse.png" alt="Apache Arrow">
 
-We need superfast, GPU accelated size optimized colmnar Format.
+We need superfast, GPU accelated, and size optimized standard colmnar format.
 <br>
 <br>
 <br>
 
 ---
 
-## boost::asio based `event driven network`
+## boost::asio based `async event driven`
 
-We can maximize network communication performance using boost::asio event driven programming model in distributed neural network.
-
----
-## Distributed build system
-
-<img align="left" width=300 src="xenonstack-advantages-of-bazel.png" alt="Eigen">
-
-<p>
-    To deal with future large distributed compile, use bazel fast build and unit test.
+<p align="center">
+    <img width=400 src="event_model.png" alt="Dense layer">
 </p>
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+We can maximize network communication performance in distributed neural network by using boost::beast framework based boost::asio async event driven programming.
 
-## Reference
+# Distributed build system
 
-### Frontend
+<p align="center">
+    <img width=400 src="xenonstack-advantages-of-bazel.png" alt="Bazel">
+</p>
+
+To deal with future large distributed compile, use bazel fast build and unit test.
+
+# Reference
+
+## Frontend
 
 - [3d-force-graph](https://github.com/vasturiano/3d-force-graph)
 - [visualizing-graphs-in-3d-with-webgl](https://neo4j.com/developer-blog/visualizing-graphs-in-3d-with-webgl/)
 
-### Backend
+## Backend
 
 - [oneTBB](https://github.com/oneapi-src/oneTBB)
 - [SYCL](https://en.wikipedia.org/wiki/SYCL)
+- [크로노스 그룹 SYCL 2020 표준 발표](https://kr.khronos.org/news/press/sycl-2020)
 - [Apache Arrow](https://en.wikipedia.org/wiki/Apache_Arrow)
 - [Eigen](https://en.wikipedia.org/wiki/Eigen_(C%2B%2B_library))
 - [boost C++ Libraries](https://www.boost.org/)
