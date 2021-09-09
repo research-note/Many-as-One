@@ -1,4 +1,4 @@
-# (Convolutional filter(s) for images)[https://github.com/research-note/conv-filters]
+# [Convolutional filter(s) for images](https://github.com/research-note/conv-filters)
 
 * Images are stored in folder images/. All images should be of the same size.
 
