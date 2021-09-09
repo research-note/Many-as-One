@@ -8,24 +8,23 @@ Also, we need container, k8s friendly cloud native framework.
 
 # Webapp - Frontend
 
+<br>
 <p align="center">
     <img width=400 src="dense-layer.png" alt="Dense layer">
 </p>
+<br>
 
 Web application visualize your model graph and provide interface that communicate with neural network handle each layer or unit. system monitoring each computing nodes that have unit are also planned.
 
 # Neural Network - Backend
 
-Scale out nerual network on cloud or on premise cluster based computing. loadbalance your trainning / test processes from big data input. so, this will reduce the NN's learning time. we quickly decide insight we want.
+Scale out nerual network on cloud or on premise cluster based computing. loadbalance your trainning / test processes from big data input. so, this will reduce the NN's learning time. we can make decision agilely from insight we want by quickly being responsed from NN.
 
 ## SYCL based tensor programming by Eigen
-
+  
 <img width=100 align="left" src="header-logo.png" alt="SYCL">
 
-<p>
-    We don't need on tensor programming `CUDA`. we need type safe program so, no more `.cl` codes from `OpenCL`.
-</p>
-
+We don't need on tensor programming `CUDA`. we need type safe program so, no more `.cl` codes from `OpenCL`.
 <br>
 <br>
 
@@ -33,21 +32,18 @@ Scale out nerual network on cloud or on premise cluster based computing. loadbal
 <p>
     We must break free from lock-in to specific GPU vendors.
 </p>
-
-<br>
 <br>
 
+<br>
 <img align="left" width=50 src="Eigen_Silly_Professor_135x135.png" alt="Eigen">
-<p>
-    Thus, we select `Eigen` tensor that have implemented SYCL backend for heterogeneous computing.
-</p>
-
-<br>
+Thus, we select `Eigen` tensor that have implemented SYCL backend for heterogeneous computing.
 <br>
 
+<br>
 <p align="center">
     <img width=600 src="2020-05-sycl-landing-page-01_3.jpg" alt="sycl flow">
 </p>
+<br>
 
 ## Handle datas with `Colomnar DB` format
 
