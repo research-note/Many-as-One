@@ -33,5 +33,5 @@ Hello World
 
 ## Refernce
 
-- (Deno websocket)[https://deno.land/std/examples/chat/server.ts]
-- (denoland docker github)[https://github.com/denoland/deno_docker]
+- [Deno websocket](https://deno.land/std/examples/chat/server.ts)
+- [denoland docker github](https://github.com/denoland/deno_docker)
