@@ -36,6 +36,7 @@ We don't need on tensor programming `CUDA`. we need type safe program so, no mor
 
 <br>
 <img align="left" width=50 src="Eigen_Silly_Professor_135x135.png" alt="Eigen">
+
 Thus, we select `Eigen` tensor that have implemented SYCL backend for heterogeneous computing.
 <br>
 
