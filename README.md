@@ -24,7 +24,7 @@ Scale out nerual network on cloud or on premise cluster based computing. loadbal
   
 <img width=100 align="left" src="header-logo.png" alt="SYCL">
 
-We don't need on tensor programming `CUDA`. we need type safe program so, no more `.cl` codes from `OpenCL`.
+We don't need on tensor programming `CUDA`, codes in `.cuh`. we need type safe program so, no more `.cl` codes from `OpenCL`.
 <br>
 <br>
 
