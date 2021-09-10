@@ -24,7 +24,7 @@ Scale out nerual network on cloud or on premise cluster based computing. loadbal
   
 <img width=100 align="left" src="README/header-logo.png" alt="SYCL">
 
-We don't need on tensor programming on `CUDA` with bunch of codes in `.cuh`.
+SYCL is an effective alternative. when we program the tensor, we don't need `CUDA` with bunch of codes in `.cu` and `.cuh`. otherwise,
 we need type safe programming. so, no more `.cl` codes from `OpenCL`.
 <br>
 <br>
@@ -35,7 +35,6 @@ we need type safe programming. so, no more `.cl` codes from `OpenCL`.
 </p>
 <br>
 
-<br>
 <img align="left" width=50 src="README/Eigen_Silly_Professor_135x135.png" alt="Eigen">
 
 Thus, we select `Eigen` tensor that have implemented SYCL backend for heterogeneous computing.
