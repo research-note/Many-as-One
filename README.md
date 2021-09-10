@@ -2,7 +2,7 @@
 
 Cloud native Superclusters supercomputed neural network parallel(core/threads, TBB, vectorized instructions), heterogeneous(FPGA or GPU accelations) computed.
 
-There's a lot of NN framework for parallel, heterogeneous computed on distributed computing. but this frameworks needed specific machine that vecdor dependent software. otherwise, we need to provide an environment where low-performance machines and high-performance machines can coexist and cooperative each other in distributed neural network. futher more, user frontend should be able to utilize a high-performance backend in a convenient web-based interface on any playform.
+There's a lot of NN framework for parallel, heterogeneous computed on distributed computing. but this frameworks needed specific machine that vecdor dependent software. futher more, user frontend should be able to utilize a high-performance NN backend in a convenient web-based interface on any playform.
 
 Also, we need container, k8s friendly cloud native framework.
 
@@ -10,7 +10,7 @@ Also, we need container, k8s friendly cloud native framework.
 
 <br>
 <p align="center">
-    <img width=400 src="dense-layer.png" alt="Dense layer">
+    <img width=400 src="README/dense-layer.png" alt="Dense layer">
 </p>
 <br>
 
@@ -22,33 +22,34 @@ Scale out nerual network on cloud or on premise cluster based computing. loadbal
 
 ## SYCL based tensor programming by Eigen
   
-<img width=100 align="left" src="header-logo.png" alt="SYCL">
+<img width=100 align="left" src="README/header-logo.png" alt="SYCL">
 
-We don't need on tensor programming on `CUDA` with bunch of codes in `.cuh`. we need type safe programming. so, no more `.cl` codes from `OpenCL`.
+We don't need on tensor programming on `CUDA` with bunch of codes in `.cuh`.
+we need type safe programming. so, no more `.cl` codes from `OpenCL`.
 <br>
 <br>
 
-<img width=100 align="right" src="Linus-Torvalds-Fuck-You-Nvidia.jpg" alt="Independent from machine vendors">
+<img width=100 align="right" src="README/Linus-Torvalds-Fuck-You-Nvidia.jpg" alt="Independent from machine vendors">
 <p>
-    We must break free from lock-in to specific GPU vendors.
+    We must break free from lock-in to specific GPU vendors. High-performance and energy efficient machines can coexist and cooperative each other in distributed neural network.
 </p>
 <br>
 
 <br>
-<img align="left" width=50 src="Eigen_Silly_Professor_135x135.png" alt="Eigen">
+<img align="left" width=50 src="README/Eigen_Silly_Professor_135x135.png" alt="Eigen">
 
 Thus, we select `Eigen` tensor that have implemented SYCL backend for heterogeneous computing.
 <br>
 
 <br>
 <p align="center">
-    <img width=600 src="2020-05-sycl-landing-page-01_3.jpg" alt="sycl flow">
+    <img width=600 src="README/2020-05-sycl-landing-page-01_3.jpg" alt="sycl flow">
 </p>
 <br>
 
 ## Handle datas with `Colomnar DB` format
 
-<img align="left" width=200 src="arrow-inverse.png" alt="Apache Arrow">
+<img align="left" width=200 src="README/arrow-inverse.png" alt="Apache Arrow">
 
 We need superfast, GPU accelated, and size optimized standard colmnar format.
 <br>
@@ -60,7 +61,7 @@ We need superfast, GPU accelated, and size optimized standard colmnar format.
 ## boost::asio based `async event driven`
 
 <p align="center">
-    <img width=400 src="event_model.png" alt="Dense layer">
+    <img width=400 src="README/event_model.png" alt="Dense layer">
 </p>
 
 We can maximize network communication performance in distributed neural network by using boost::beast framework based boost::asio async event driven programming.
@@ -68,7 +69,7 @@ We can maximize network communication performance in distributed neural network 
 # Distributed build system
 
 <p align="center">
-    <img width=400 src="xenonstack-advantages-of-bazel.png" alt="Bazel">
+    <img width=400 src="README/xenonstack-advantages-of-bazel.png" alt="Bazel">
 </p>
 
 To deal with future large distributed compile, use bazel fast build and unit test.
