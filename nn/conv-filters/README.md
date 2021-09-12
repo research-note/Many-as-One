@@ -7,16 +7,16 @@
 
 ## Install
 
-Install g++ latest on ubuntu version.
+Install g++ libtbb latest version.
 
 ```bash
-g++-10
+ $ sudo apt -y update && sudo apt -y install g++-10 libtbb-dev
 ```
 
 Install python libraries.
 
 ```bash
-$ pip3 install numpy image matplotlib
+ $ pip3 install numpy image matplotlib
 ```
 
 ## Code structure
@@ -44,9 +44,9 @@ for (int id = 0; id < num_images; ++id) {
 
 ```bash
 rm *.o main
-g++  -std=gnu++11 -O2 filter.hpp -o filter.o
-g++  -std=gnu++11 -O2 conv2d_layer.hpp -o conv2d_layer.o
-g++  -std=gnu++11 -O2 main.cpp -o main
+g++  -std=gnu++20 -O3 filter.hpp -o filter.o
+g++  -std=gnu++20 -O3 conv2d_layer.hpp -o conv2d_layer.o
+g++  -std=gnu++20 -O3 main.cpp -o main
 ```
 
 * List of images to use is in file make\_mats.py. In the demo it uses a batch of 3  512 \* 512 \* 3 (color) images.
