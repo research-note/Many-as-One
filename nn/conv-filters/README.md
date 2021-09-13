@@ -20,7 +20,7 @@ Install python libraries.
 ```
 
 ## Code structure
-  * filter.hpp defines a 3-D convolutinal kernel class with a bias term. It contains some helper functions to allocate memory to tensors and to normalize them.
+  * filter.hpp defines a 3-D convolutional kernel class with a bias term. It contains some helper functions to allocate memory to tensors and to normalize them.
   * conv2d\_layer.hpp defines a convolutional layer. One can set the stride and zero-padding of the filter in this. Also, dimensions of the output layer are calculated
     automatically.
   * conv2d method takes as argument a 3-D data volume and a list of filters (one filter generates one activation map). For example, applying a 3 x 3 x 3 filter on a 512 x 512 x 3 image (with 1 zero padding and 1 stride) will generate an 2-D output layer of 512 x 512. See example (taken from course [cs231n](http://cs231n.stanford.edu/syllabus.html)).
@@ -44,9 +44,10 @@ for (int id = 0; id < num_images; ++id) {
 
 ```bash
 rm *.o main
-g++  -std=gnu++20 -O3 filter.hpp -o filter.o
-g++  -std=gnu++20 -O3 conv2d_layer.hpp -o conv2d_layer.o
-g++  -std=gnu++20 -O3 main.cpp -o main
+g++-10  -std=gnu++20 -O3 filter.hpp -o filter.o
+g++-10  -std=gnu++20 -O3 conv2d_layer.hpp -o conv2d_layer.o
+g++-10  -std=gnu++20 -O3 NDGrid.hpp -o NDGrid.o
+g++-10  -std=gnu++20 -O3 main.cpp -o main
 ```
 
 * List of images to use is in file make\_mats.py. In the demo it uses a batch of 3  512 \* 512 \* 3 (color) images.
@@ -72,7 +73,7 @@ Images taken from [USC Viterbi image dataset](http://sipi.usc.edu/database/datab
 
 Input images               |  Output images
 :-------------------------:|:-------------------------:
-![](./images/color/lena.png) | ![](./out_mats/1.bmp)
-![](./images/color/airplane.png) | ![](./out_mats/7.bmp)
-![](./images/color/fruits.png) | ![](./out_mats/5.bmp)
+![](./images/color/airplane.png) | ![](./images/filter/0.bmp)
+![](./images/color/fruits.png) | ![](./images/filter/1.bmp)
+![](./images/color/lena.png) | ![](./images/filter/2.bmp)
 
