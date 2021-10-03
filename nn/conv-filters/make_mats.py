@@ -28,4 +28,3 @@ if __name__ == "__main__":
     f.write("%d 512 512 %d\n" % (len(filenames), depth)) # image tensor dimensions
     for filename in filenames:
         append_matrix(foldername + filename, f)
-

@@ -77,7 +77,7 @@ tensor get_tensor(int x, int y, int z) {
 class filter {
 public:
     tensor w;
-    double b;     // krenel matrix, bias term
+    double b; // kernel matrix, bias term
     int window, depth;
 
     static const size_t kDefaultSize = 3;
@@ -108,17 +108,17 @@ public:
     void normalize() {
         double sum = 0;
 
-        for_each(std::execution::par_unseq, w.begin(), w.end(), [&sum](auto m){
-            for_each(std::execution::par_unseq, m.begin(), m.end(), [&sum](auto v){
-                for_each(std::execution::par_unseq, v.begin(), v.end(), [&sum](auto v){
+        for_each(std::execution::par_unseq, w.begin(), w.end(), [&sum](auto m) {
+            for_each(std::execution::par_unseq, m.begin(), m.end(), [&sum](auto v) {
+                for_each(std::execution::par_unseq, v.begin(), v.end(), [&sum](auto v) {
                     sum += std::abs(v);
                 });
             });
         });
 
-        for_each(std::execution::par_unseq, w.begin(), w.end(), [sum](auto m){
-            for_each(std::execution::par_unseq, m.begin(), m.end(), [sum](auto v){
-                for_each(std::execution::par_unseq, v.begin(), v.end(), [sum](auto v){
+        for_each(std::execution::par_unseq, w.begin(), w.end(), [sum](auto m) {
+            for_each(std::execution::par_unseq, m.begin(), m.end(), [sum](auto v) {
+                for_each(std::execution::par_unseq, v.begin(), v.end(), [sum](auto v) {
                     v /= sum;
                 });
             });

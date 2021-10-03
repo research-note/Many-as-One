@@ -1,4 +1,5 @@
-CC=g++-10
+# CC=g++-10
+CC=clang++-12
 CFLAGS= -std=gnu++20 -O3
 LIB= -Wl,-rpath,/home/manycore6/lib
 LDFLAGS= -ltbb -lm
