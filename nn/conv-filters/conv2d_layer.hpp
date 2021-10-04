@@ -46,29 +46,28 @@ public:
         conv2d(tensor x, /*std::vector<filter> filters*/ const std::vector<filter*> &filters) {
         tensor y(out_width, matrix(out_height, v(out_depth)));
 
-        int i, j, k;
-        int i_pt, j_pt, k_pt;
-        int i_start, j_start, i_end, j_end;
-
-        for (i = 0; i < out_width; ++i) {
-            for (j = 0; j < out_height; ++j) {
-                for (k = 0; k < n_filters; ++k) {     // k_th activation map
-                    /**
-                     * fill y[i][j] with kernel computation filters[k]->x + b
-                     * compute boundaries inside original matrix after padding
-                     */
-                    i_start = -padding + i*stride,  
-                    j_start = -padding + j*stride;
-                    i_end = i_start + window;
-                    j_end = j_start + window;
-
-                    for (i_pt = std::max(0, i_start); i_pt < std::min(in_width, i_end); ++i_pt) {
-                        for (j_pt = std::max(0, j_start); j_pt < std::min(in_height, j_end); ++j_pt) {
-                            for (k_pt = 0; k_pt < in_depth; ++k_pt) {
-                                y[i][j][k] += x[i_pt][j_pt][k_pt] * filters[k]->w[i_pt - i_start][j_pt - j_start][k_pt]; 
+        for (int i = 0, i_start = 0, i_end = 0, i_max = 0; i < out_width; ++i) {
+            i_start = -padding + i * stride;
+            i_end = i_start + window;
+            i_max = std::min(in_width, i_end);
+            for (int j = 0, j_start = 0, j_end = 0, j_max = 0; j < out_height; ++j) {
+                j_start = -padding + j * stride;
+                j_end = j_start + window;
+                j_max = std::min(in_height, j_end);
+                for (int k = 0; k < n_filters; ++k) { // k_th activation map
+                    
+                    for (int i_pt = std::max(0, i_start); i_pt < i_max; ++i_pt) {
+                        for (int j_pt = std::max(0, j_start); j_pt < j_max; ++j_pt) {
+                            for (int k_pt = 0; k_pt < in_depth; ++k_pt) {
+                                /**
+                                 * fill y[i][j] with kernel computation filters[k]->x + b
+                                 * compute boundaries inside original matrix after padding
+                                 */
+                                y[i][j][k] += x[i_pt][j_pt][k_pt] * filters[k]->w[i_pt - i_start][j_pt - j_start][k_pt];
                             }
                         }
                     }
+
                     y[i][j][k] += filters[k]->b;  // bias term
                 }
             }

@@ -11,42 +11,61 @@
 /**
  * v w(x);
  */
-using v = std::vector<double>;
+using v = std::vector<float>;
 
 /**
  * matrix w(x, v(y));
  */
-using matrix = std::vector<std::vector<double>>;
+using matrix = std::vector<std::vector<float>>;
 
 /**
  * tensor w(x, matrix(y,v(z)));
  */
-using tensor = std::vector<std::vector<std::vector<double>>>;
+using tensor = std::vector<std::vector<std::vector<float>>>;
 
 template <typename F, typename T>
-T for_matrix(F f, T m) {
-    for_each(std::execution::par, m.begin(), m.end(), f);
-    return m;
+T for_vector(F f, T v) {
+    for_each(std::execution::par, v.begin(), v.end(), f);
+    return v;
 }
 
 template <typename F, typename T>
-T trans_matrix(F f, T &m) {
-    transform(std::execution::par, m.begin(), m.end(),
-            m.begin(), [f](auto v) -> auto {
-                return f(v);
-            });
+T for_matrix(F f, T m) {
+    for_each(std::execution::par,
+        m.begin(), m.end(),
+        [f](auto v) {
+            for_vector(f, v);
+        });
+    
     return m;
 }
 
 template <typename F, typename T>
 T for_tensor(F f, T t) {
-    for_each(std::execution::par, 
+    for_each(std::execution::par,
         t.begin(), t.end(),
         [f](auto m) {
             for_matrix(f, m);      
         });
-
     return t;
+}
+
+template <typename F, typename T>
+T trans_vector(F f, T &v) {
+    transform(std::execution::par, v.begin(), v.end(),
+        v.begin(), [f](auto v) -> auto {
+            return f(v);
+        });
+    return v;
+}
+
+template <typename F, typename T>
+T trans_matrix(F f, T &m) {
+    transform(std::execution::par, m.begin(), m.end(),
+        m.begin(), [f](auto v) -> auto {
+            return trans_vector(f, v);
+        });
+    return m;
 }
 
 /**
@@ -59,14 +78,39 @@ T trans_tensor(F f, T &t) {
         t.begin(), [f](auto m) -> auto {
             return trans_matrix(f, m);
         });
-
     return t;
 }
 
-template <typename T>
-auto sum(T t) {
-    return reduce(std::execution::par, t.begin(), t.end());
+template <typename T, typename Init>
+auto sum_vector(T t, Init value) {
+    return reduce(std::execution::par, t.begin(), t.end(), value);
 }
+
+template <typename F, typename T>
+auto trans_reduce_vector(F f, T v) {
+    return transform_reduce(std::execution::par, v.begin(), v.end(),
+        0.0, std::plus<>(), f);
+}
+
+template <typename F, typename T>
+auto trans_reduce_matrix(F f, T m) {
+    return transform_reduce(std::execution::par, m.begin(), m.end(),
+        0.0, std::plus<>(),
+        [f](auto v) -> auto {
+            return trans_reduce_vector(f, v);
+        });
+}
+
+template <typename F, typename T>
+auto trans_reduce_tensor(F f, T t) {
+    return transform_reduce(std::execution::par, t.begin(), t.end(),
+        0.0, std::plus<>(),
+        [f](auto m) -> auto {
+            return trans_reduce_matrix(f, m);
+        });
+}
+
+
 
 // allocate memory for a tensor
 tensor get_tensor(int x, int y, int z) {
@@ -106,23 +150,13 @@ public:
 
     // normalize the tensor
     void normalize() {
-        double sum = 0;
+        auto sum = trans_reduce_tensor([](auto v) -> auto {
+                return std::abs(v);
+            }, w);
 
-        for_each(std::execution::par_unseq, w.begin(), w.end(), [&sum](auto m) {
-            for_each(std::execution::par_unseq, m.begin(), m.end(), [&sum](auto v) {
-                for_each(std::execution::par_unseq, v.begin(), v.end(), [&sum](auto v) {
-                    sum += std::abs(v);
-                });
-            });
-        });
-
-        for_each(std::execution::par_unseq, w.begin(), w.end(), [sum](auto m) {
-            for_each(std::execution::par_unseq, m.begin(), m.end(), [sum](auto v) {
-                for_each(std::execution::par_unseq, v.begin(), v.end(), [sum](auto v) {
-                    v /= sum;
-                });
-            });
-        });
+        trans_tensor([sum](auto v) -> auto {
+            return v / sum;
+        }, w);
     }
 
 };

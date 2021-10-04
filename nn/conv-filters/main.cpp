@@ -32,17 +32,10 @@ int main(int argc, char *argv[]) {
      * input the image kernel matrix
      */ 
     matrix kernel(w_size, v(w_size));
-    trans_tensor([](auto v) -> auto {
+    trans_matrix([](auto v) -> auto {
                 cin >> v;
                 return v;
             }, kernel);
-
-    /**
-     * Print filter.txt input
-     */
-    /* for_tensor([](auto v) {
-                cout << v << endl;
-            }, kernel); */
 
     std::vector<filter*> filters;
     array<unsigned int, 3> rgb = {0, 1, 2};
