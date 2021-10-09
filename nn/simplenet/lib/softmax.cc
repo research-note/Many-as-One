@@ -8,24 +8,26 @@
 #include <iostream>
 #include <algorithm>
 #include <numeric>
-#include <cmath>
+#include <complex>
+#include <functional>
 
 #include "lib/softmax.hpp"
 
 template <typename T>
 T softmax(T x) {
     auto max = std::max_element(x.begin(), x.end());
-
-    std::transform(std::execution::par, x.begin(), x.end(),
-        x.begin(), [max](auto v) -> auto {
-            return exp(v - max);
+    auto maxsub = [max](auto v) -> auto {
+        return v - *max;
+    };
+    std::transform(std::execution::par, x.begin(), x.end(), 
+        x.begin(), [maxsub](auto v) -> auto {
+            return std::exp(maxsub(v));
         });
 
-    const auto sum = std::reduce(std::execution::par,
-        x.cbegin(), x.cend());
-
-    std::transform(std::execution::par, x.begin(), x.end(),
-        x.begin(), [sum](auto v) -> auto {
+    auto sum = std::reduce(std::execution::par,
+        x.cbegin(), x.cend(), 0.0);
+    std::transform(std::execution::par, x.begin(), x.end(), 
+        x.begin(), [sum](auto v) {
             return v / sum;
         });
 
