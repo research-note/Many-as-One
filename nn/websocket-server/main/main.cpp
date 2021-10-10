@@ -30,12 +30,11 @@ int
 main(int argc, char* argv[])
 {
     // Check command line arguments.
-    if (argc != 5)
-    {
+    if (argc != 5) {
         std::cerr <<
-            "Usage: websocket-chat-multi <address> <port> <doc_root> <threads>\n" <<
+            "Usage: websocket-server <address> <port> <doc_root> <threads>\n" <<
             "Example:\n" <<
-            "    websocket-chat-server 0.0.0.0 8080 . 5\n";
+            "    websocket-server 0.0.0.0 8080 . 5\n";
         return EXIT_FAILURE;
     }
     auto address = net::ip::make_address(argv[1]);
@@ -55,8 +54,7 @@ main(int argc, char* argv[])
     // Capture SIGINT and SIGTERM to perform a clean shutdown
     net::signal_set signals(ioc, SIGINT, SIGTERM);
     signals.async_wait(
-        [&ioc](boost::system::error_code const&, int)
-        {
+        [&ioc] (boost::system::error_code const&, int) {
             // Stop the io_context. This will cause run()
             // to return immediately, eventually destroying the
             // io_context and any remaining handlers in it.
@@ -68,8 +66,7 @@ main(int argc, char* argv[])
     v.reserve(threads - 1);
     for(auto i = threads - 1; i > 0; --i)
         v.emplace_back(
-        [&ioc]
-        {
+        [&ioc] {
             ioc.run();
         });
     ioc.run();
