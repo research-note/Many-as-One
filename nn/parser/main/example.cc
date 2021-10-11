@@ -1,11 +1,11 @@
-#include "main/MnistParser.hpp"
+#include "main/Parser.hpp"
 #include <iostream>
 
 using namespace std;
 
 int main(void)
 {
-	MnistParser *parser =  new MnistParser();
+	Parser *parser =  new Parser();
 	parser->loadMnist();
 
     cout<<fixed;
