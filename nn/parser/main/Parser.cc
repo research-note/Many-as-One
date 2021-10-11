@@ -1,8 +1,8 @@
-#include "MnistParser.hpp"
+#include "Parser.hpp"
 
 // set appropriate path for data
-#define TEST_IMAGE "./data/t10k-images.idx3-ubyte"
-#define TEST_LABEL "./data/t10k-labels.idx1-ubyte"
+#define TEST_IMAGE "./mnist_data/t10k-images.idx3-ubyte"
+#define TEST_LABEL "./mnist_data/t10k-labels.idx1-ubyte"
 
 // #define SIZE 784 // 28*28
 // #define NUM_TEST 10000
@@ -24,15 +24,15 @@ unsigned char test_label_char[NUM_TEST][1];
 double test_image[NUM_TEST][SIZE];
 int test_label[NUM_TEST];
 
-MnistParser::MnistParser() {
+Parser::Parser() {
 
 }
 
-MnistParser::~MnistParser() {
+Parser::~Parser() {
 
 }
 
-void MnistParser::loadMnist()
+void Parser::loadMnist()
 {
     readMnistImage(TEST_IMAGE, NUM_TEST, LEN_INFO_IMAGE, SIZE, test_image_char, info_image);
     imageChar2Double(NUM_TEST, test_image_char, test_image);
@@ -41,7 +41,7 @@ void MnistParser::loadMnist()
     labelChar2Int(NUM_TEST, test_label_char, test_label);
 }
 
-void MnistParser::readMnistImage(char *file_path, int num_data, int len_info, int arr_n, unsigned char data_char[][SIZE], int info_arr[])
+void Parser::readMnistImage(char *file_path, int num_data, int len_info, int arr_n, unsigned char data_char[][SIZE], int info_arr[])
 {
     int i, fd;
     unsigned char *ptr;
@@ -59,7 +59,7 @@ void MnistParser::readMnistImage(char *file_path, int num_data, int len_info, in
     close(fd);
 }
 
-void MnistParser::imageChar2Double(int num_data, unsigned char data_image_char[][SIZE], double data_image[][SIZE])
+void Parser::imageChar2Double(int num_data, unsigned char data_image_char[][SIZE], double data_image[][SIZE])
 {
     int i, j;
     for (i=0; i<num_data; i++)
@@ -67,7 +67,7 @@ void MnistParser::imageChar2Double(int num_data, unsigned char data_image_char[]
             data_image[i][j]  = (double)data_image_char[i][j] / 255.0;
 }
 
-void MnistParser::readMnistLabel(char *file_path, int num_data, int len_info, int arr_n, unsigned char data_char[][1], int info_arr[])
+void Parser::readMnistLabel(char *file_path, int num_data, int len_info, int arr_n, unsigned char data_char[][1], int info_arr[])
 {
     int i, fd;
     unsigned char *ptr;
@@ -85,7 +85,7 @@ void MnistParser::readMnistLabel(char *file_path, int num_data, int len_info, in
     close(fd);
 }
 
-void MnistParser::labelChar2Int(int num_data, unsigned char data_label_char[][1], int data_label[])
+void Parser::labelChar2Int(int num_data, unsigned char data_label_char[][1], int data_label[])
 {
     int i;
     for (i=0; i<num_data; i++)

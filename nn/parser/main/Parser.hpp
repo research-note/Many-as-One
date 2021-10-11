@@ -10,10 +10,10 @@
 #define SIZE 784 // 28*28
 #define NUM_TEST 10000
 
-class MnistParser {
+class Parser {
     public:
-        MnistParser();
-        ~MnistParser();
+        Parser();
+        ~Parser();
         void loadMnist();
         double test_image[NUM_TEST][SIZE];
     private: 
@@ -23,6 +23,6 @@ class MnistParser {
         void labelChar2Int(int num_data, unsigned char data_label_char[][1], int data_label[]);
 };
 
-#include "MnistParser.cc"
+#include "Parser.cc"
 
 #endif // _NN_MNIST_PARSER_HPP_

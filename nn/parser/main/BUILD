@@ -2,7 +2,7 @@ load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
 
 cc_library(
     name = "parser",
-    hdrs = ["MnistParser.hpp", "MnistParser.cc"],
+    hdrs = ["Parser.hpp", "Parser.cc"],
 )
 
 cc_binary(
