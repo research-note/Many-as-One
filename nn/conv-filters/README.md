@@ -77,3 +77,20 @@ Input images               |  Output images
 ![](./images/color/fruits.png) | ![](./images/filter/1.bmp)
 ![](./images/color/lena.png) | ![](./images/filter/2.bmp)
 
+## RGB to Greyscale
+
+* PAL, NTSC : [Y'UV](https://en.wikipedia.org/wiki/YUV), [Y'IQ](https://en.wikipedia.org/wiki/YIQ)
+
+```
+Y = 0.299 * R + 0.587 * G + 0.114 * B
+```
+
+* HDTV : [IUT-R BT.709](https://en.wikipedia.org/wiki/Rec._709)
+
+```
+Y = 0.2126 * R + 0.7152 * G + 0.0722 * B
+```
+
+## References
+
+- [convert-rgb-to-grayscale](https://blog.leocat.kr/notes/2016/01/12/convert-rgb-to-grayscale)
