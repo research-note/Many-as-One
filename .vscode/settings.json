@@ -2,6 +2,7 @@
     "files.associations": {
         "cmath": "cpp",
         "functional": "cpp",
-        "iosfwd": "cpp"
+        "iosfwd": "cpp",
+        "system_error": "cpp"
     }
 }

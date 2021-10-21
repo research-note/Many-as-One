@@ -1181,51 +1181,6 @@ upng_t* upng_new_from_bytes(const unsigned char* buffer, unsigned long size)
 	return upng;
 }
 
-upng_t* upng_new_from_file(string filename)
-{
-	upng_t* upng;
-	unsigned char *buffer;
-	FILE *file;
-	long size;
-
-	upng = upng_new();
-	if (upng == NULL) {
-		return NULL;
-	}
-
-	file = fopen(filename.c_str(), "rb");
-	if (file == NULL) {
-		SET_ERROR(upng, UPNG_ENOTFOUND);
-		return upng;
-	}
-
-	/* get filesize */
-	fseek(file, 0, SEEK_END);
-	size = ftell(file);
-	rewind(file);
-
-	/* read contents of the file into the vector */
-	buffer = (unsigned char *)malloc((unsigned long)size);
-	if (buffer == NULL) {
-		fclose(file);
-		SET_ERROR(upng, UPNG_ENOMEM);
-		return upng;
-	}
-	size_t ret = fread(buffer, 1, (unsigned long)size, file);
-    if (ret != size) {
-        fprintf(stderr, "fread() failed: %zu\n", ret);
-        exit(EXIT_FAILURE);
-    }
-	fclose(file);
-
-	/* set the read buffer as our source buffer, with owning flag set */
-	upng->source.buffer = buffer;
-	upng->source.size = size;
-	upng->source.owning = 1;
-
-	return upng;
-}
-
 void upng_free(upng_t* upng)
 {
 	/* deallocate palette */
@@ -1346,14 +1301,6 @@ unsigned char test_label_char[NUM_TEST][1];
 double test_image[NUM_TEST][SIZE];
 int test_label[NUM_TEST];
 
-Parser::Parser() {
-
-}
-
-Parser::~Parser() {
-
-}
-
 void Parser::loadMnist()
 {
     readMnistImage(TEST_IMAGE, NUM_TEST, LEN_INFO_IMAGE, SIZE, test_image_char, info_image);
@@ -1415,18 +1362,18 @@ void Parser::labelChar2Int(int num_data, unsigned char data_label_char[][1], int
 }
 
 void Parser::loadPng(string fileName) {
-	upng_t* upng;
+	Upng upng;
 	unsigned width, height, depth;
 	unsigned x, y, d;
 
-	upng = upng_new_from_file(fileName);
-	if (upng_get_error(upng) != UPNG_EOK) {
-		printf("[upng_new_from_file] error: %u %u\n", upng_get_error(upng), upng_get_error_line(upng));
+	upng.readFile(fileName);
+	if (upng.upng_get_error() != EUpngError::UPNG_EOK) {
+		printf("[getUpng] error: %u %u\n", upng.upng_get_error(), upng.upng_get_error_line());
 		return;
 	}
 
 	if (upng_decode(upng) != UPNG_EOK) {
-		printf("[upng_decode] error: %u %u\n", upng_get_error(upng), upng_get_error_line(upng));
+		printf("[upng_decode] error: %u %u\n", upng.upng_get_error(), upng.upng_get_error_line());
 		return;
 	}
 
@@ -1450,6 +1397,4 @@ void Parser::loadPng(string fileName) {
 		}
 		printf("\n\n-\n\n");
 	}
-
-	upng_free(upng);
 }

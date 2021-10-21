@@ -1,35 +1,3 @@
-#ifndef _NN_PARSER_HPP_
-#define _NN_PARSER_HPP_
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <string>
-
-#define SIZE 784 // 28*28
-#define NUM_TEST 10000
-
-using namespace std;
-
-class Parser {
-    public:
-        Parser();
-        ~Parser();
-        void loadMnist();
-		void loadPng(string fileName);
-    private: 
-        void readMnistImage(char *file_path, int num_data, int len_info, int arr_n, unsigned char data_char[][SIZE], int info_arr[]);
-        void readMnistLabel(char *file_path, int num_data, int len_info, int arr_n, unsigned char data_char[][1], int info_arr[]);
-        void imageChar2Double(int num_data, unsigned char data_image_char[][SIZE], double data_image[][SIZE]);
-        void labelChar2Int(int num_data, unsigned char data_label_char[][1], int data_label[]);
-};
-
-#include "Parser.cc"
-
-#endif // _NN_PARSER_HPP_
-
-
 #if !defined(UPNG_H)
 #define UPNG_H
 
@@ -90,3 +58,40 @@ unsigned				upng_get_size		(const upng_t* upng);
 const unsigned char*	upng_get_palette	(const upng_t* upng);
 
 #endif /*defined(UPNG_H)*/
+
+
+#ifndef _NN_PARSER_HPP_
+#define _NN_PARSER_HPP_
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <string>
+#include "Upng.hpp"
+
+#define SIZE 784 // 28*28
+#define NUM_TEST 10000
+
+using namespace std;
+
+class Parser {
+    public:
+		// mnist
+        void loadMnist();
+
+		// png
+		void loadPng(string fileName);
+    private: 
+		// mnist
+        void readMnistImage(char *file_path, int num_data, int len_info, int arr_n, unsigned char data_char[][SIZE], int info_arr[]);
+        void readMnistLabel(char *file_path, int num_data, int len_info, int arr_n, unsigned char data_char[][1], int info_arr[]);
+        void imageChar2Double(int num_data, unsigned char data_image_char[][SIZE], double data_image[][SIZE]);
+        void labelChar2Int(int num_data, unsigned char data_label_char[][1], int data_label[]);
+
+		//png
+};
+
+#include "Parser.cc"
+
+#endif // _NN_PARSER_HPP_
