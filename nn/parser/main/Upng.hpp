@@ -65,31 +65,28 @@ typedef struct upng_source {
 
 class Upng {
     public:
-        unsigned int width;
-        unsigned int height;
-
+        unsigned int 	width;
+        unsigned int 	height;
         EUpngColor		color_type;
         unsigned		color_depth;
         EUpngFormat		format;
-
         unsigned char*	buffer;
         unsigned long	size;
-
         unsigned char*	palette;
-
         EUpngError		error;
         unsigned int	error_line;
-
         EUpngState		state;
         upng_source		source;
 
         Upng();
         ~Upng();
-		void readFile(string filename);
-		EUpngError upng_get_error();
-		unsigned int upng_get_error_line();
+		void 			readFile(string filename);
+		EUpngError 		upng_get_error();
+		unsigned int 	upng_get_error_line();
+		void 			upng_decode();
 	private:
 		void SET_ERROR(EUpngError code);
+		void upng_header();
 };
 
 #include "Upng.cc"

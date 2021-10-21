@@ -1372,7 +1372,8 @@ void Parser::loadPng(string fileName) {
 		return;
 	}
 
-	if (upng_decode(upng) != UPNG_EOK) {
+	upng.upng_decode();
+	if (upng.upng_get_error() != EUpngError::UPNG_EOK) {
 		printf("[upng_decode] error: %u %u\n", upng.upng_get_error(), upng.upng_get_error_line());
 		return;
 	}
