@@ -63,6 +63,19 @@ typedef struct upng_source {
 	char					owning;
 } upng_source;
 
+#define MAKE_BYTE(b) ((b) & 0xFF)
+#define MAKE_DWORD(a,b,c,d) ((MAKE_BYTE(a) << 24) | (MAKE_BYTE(b) << 16) | (MAKE_BYTE(c) << 8) | MAKE_BYTE(d))
+#define MAKE_DWORD_PTR(p) MAKE_DWORD((p)[0], (p)[1], (p)[2], (p)[3])
+
+#define CHUNK_IHDR MAKE_DWORD('I','H','D','R')
+#define CHUNK_IDAT MAKE_DWORD('I','D','A','T')
+#define CHUNK_IEND MAKE_DWORD('I','E','N','D')
+#define CHUNK_PLTE MAKE_DWORD('P','L','T','E')
+
+#define upng_chunk_length(chunk) MAKE_DWORD_PTR(chunk)
+#define upng_chunk_type(chunk) MAKE_DWORD_PTR((chunk) + 4)
+#define upng_chunk_critical(chunk) (((chunk)[4] & 32) == 0)
+
 class Upng {
     public:
         unsigned int 	width;
@@ -87,6 +100,8 @@ class Upng {
 	private:
 		void SET_ERROR(EUpngError code);
 		void upng_header();
+		EUpngFormat determine_format();
+		unsigned upng_get_bpp();
 };
 
 #include "Upng.cc"
