@@ -83,8 +83,10 @@ def _impl(ctx):
                                 "-pg",
                                 "-Og",
                                 "-Wall",
+                                "-lpthread",
                                 "-ltbb",
-                                "-larrow_shared"
+                                # "-larrow_shared",
+                                "-lgtest",
                             ],
                         ),
                     ]),

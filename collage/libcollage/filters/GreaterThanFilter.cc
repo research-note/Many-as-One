@@ -1,0 +1,37 @@
+
+#include <arrow/api.h>
+
+#include "filters/GreaterThanFilter.hpp"
+
+namespace db {
+
+template <typename T>
+GreaterThanFilter<T>::GreaterThanFilter(std::string column_name, typename T::ElementType value)
+        : _column_name(column_name), _value(value)
+{
+
+}
+
+template <>
+void
+GreaterThanFilter<db::LongType>::initialize(TableCursor& table_cursor) {
+    _cursor = table_cursor.getLongColumn(_column_name);
+}
+
+template <>
+void
+GreaterThanFilter<db::DoubleType>::initialize(TableCursor& table_cursor) {
+    _cursor = table_cursor.getDoubleColumn(_column_name);
+}
+
+template <typename T>
+bool
+GreaterThanFilter<T>::evaluate()
+{
+    return _cursor->get() > _value;
+}
+
+};
+
+template class db::GreaterThanFilter<db::LongType>;
+template class db::GreaterThanFilter<db::DoubleType>;
