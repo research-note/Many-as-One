@@ -42,9 +42,23 @@ for (int id = 0; id < num_images; ++id) {
 ## Steps to run
 * Compile using make. Build file for convolutional filter demo program is 'main'. See run.sh for a complete run
 
-```bazel
-
+```bash
+bash run.sh
 ```
+
+or
+
+```bash
+bash bazel.sh
+```
+
+## Compile each step
+
+```bazel
+bazel build --config=clang_config //src:main
+```
+
+or direct compile.
 
 ```bash
 rm *.o main
