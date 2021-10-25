@@ -1,5 +1,5 @@
 
-# A Simple In-Memory Database Using Apache Arrow
+# Collage - A Simple In-Memory Columnar Edge Store Using Apache Arrow
 
 [Apache Arrow](https://arrow.apache.org/) provides a uniform in-memory columnar representation for data, and
 a convenient set of C++ APIs (among others) for working with that representation.
