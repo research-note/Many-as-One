@@ -10,20 +10,20 @@ DEBUG=-g
 
 all: main
 
-main: conv2d_layer.o filter.o NDGrid.o main.cpp
-	$(CC) $(LIB) $(CFLAGS) main.cpp -o main $(LDFLAGS)
+main: conv2d_layer.o filter.o NDGrid.o src/main.cc
+	$(CC) $(LIB) $(CFLAGS) src/main.cc -o main $(LDFLAGS)
 
-gcc: conv2d_layer.o filter.o NDGrid.o main.cpp
-	$(GCC) $(LIB) $(GCCFLAGS) main.cpp -o main $(LDFLAGS)
+gcc: conv2d_layer.o filter.o NDGrid.o src/main.cc
+	$(GCC) $(LIB) $(GCCFLAGS) src/main.cc -o main $(LDFLAGS)
 
-conv2d_layer.o: conv2d_layer.hpp filter.o
-	$(CC) $(CFLAGS) conv2d_layer.hpp -o conv2d_layer.o
+conv2d_layer.o: src/conv2d_layer.hpp filter.o
+	$(CC) $(CFLAGS) src/conv2d_layer.hpp -o conv2d_layer.o
 
-filter.o: filter.hpp
-	$(CC) $(CFLAGS) filter.hpp -o filter.o
+filter.o: src/filter.hpp
+	$(CC) $(CFLAGS) src/filter.hpp -o filter.o
 
-NDGrid.o: NDGrid.hpp
-	$(CC) $(CFLAGS) NDGrid.hpp -o NDGrid.o
+NDGrid.o: src/NDGrid.hpp
+	$(CC) $(CFLAGS) src/NDGrid.hpp -o NDGrid.o
 
 clean:
 	rm *.o main
