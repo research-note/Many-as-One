@@ -1,11 +1,11 @@
-#include "main/Parser.hpp"
+#include "main/CParser.hpp"
 #include <iostream>
 
 using namespace std;
 
 int main(void)
 {
-	Parser parser;
+	CParser parser;
     
     // // mnist
 	// parser.loadMnist();
