@@ -20,7 +20,6 @@ cc_library(
         "tables/FilterProjectTableCursor.hpp",
         "tables/ScanTableCursor.hpp",
         "tables/TableCursor.hpp",
-        
     ],
 
     visibility = [
