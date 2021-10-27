@@ -9,6 +9,12 @@
 
 #include "shared_state.hpp"
 #include "websocket_session.hpp"
+#include <iostream>
+#include <string>
+#include <vector>
+#include <sstream>
+#include <cstdlib>
+#include <fstream>
 
 shared_state::
 shared_state(std::string doc_root)
@@ -37,6 +43,20 @@ void
 shared_state::
 send(std::string message)
 {
+    std::cout << "message: " << message << std::endl;
+
+    std::vector<std::string> tokens;
+    std::istringstream iss(message);
+    std::string token;
+    //for(std::string token; std::getline(iss, token, ':');)
+    while(std::getline(iss, token, ':'))
+        tokens.push_back(token);
+
+    if(0 == tokens[1].compare("/test")) {
+        std::system("ls -l > test.txt");
+        std::cout << std::ifstream("test.txt").rdbuf();
+    }
+
     // Put the message in a shared pointer so we can re-use it for each client
     auto const ss = boost::make_shared<std::string const>(std::move(message));
 
