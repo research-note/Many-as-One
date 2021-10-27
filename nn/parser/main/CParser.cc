@@ -1278,8 +1278,8 @@
 // parser class
 
 // set appropriate path for data
-#define TEST_IMAGE "./mnist_data/t10k-images.idx3-ubyte"
-#define TEST_LABEL "./mnist_data/t10k-labels.idx1-ubyte"
+#define TEST_IMAGE (char *) "./mnist_data/t10k-images.idx3-ubyte"
+#define TEST_LABEL (char *) "./mnist_data/t10k-labels.idx1-ubyte"
 
 // #define SIZE 784 // 28*28
 // #define NUM_TEST 10000
@@ -1305,7 +1305,7 @@ void CParser::loadMnist()
 {
     readMnistImage(TEST_IMAGE, NUM_TEST, LEN_INFO_IMAGE, SIZE, test_image_char, info_image);
     imageChar2Double(NUM_TEST, test_image_char, test_image);
-    
+
     readMnistLabel(TEST_LABEL, NUM_TEST, LEN_INFO_LABEL, 1, test_label_char, info_label);
     labelChar2Int(NUM_TEST, test_label_char, test_label);
 }
@@ -1382,7 +1382,7 @@ void CParser::loadPng(string fileName) {
 	height = upng.height;
 	depth = upng.upng_get_bpp() / 8;
 
-	printf("size:	%ux%ux%u (%u)\n", width, height, upng.upng_get_bpp(), upng.size);
+	printf("size:	%ux%ux%u (%lu)\n", width, height, upng.upng_get_bpp(), upng.size);
 	printf("format:	%u\n", upng.format);
 
 	if (upng.format == EUpngFormat::UPNG_RGB8 || upng.format == EUpngFormat::UPNG_RGBA8) {

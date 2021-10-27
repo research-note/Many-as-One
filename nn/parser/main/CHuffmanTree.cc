@@ -1,4 +1,4 @@
-#include "CHuffmanTree.hpp"
+#include <cstring>
 
 CHuffmanTree::CHuffmanTree() {
     this->tree2d = NULL;
@@ -23,6 +23,9 @@ CHuffmanTree* CHuffmanTree::setMaxBitLen(
     return this;
 }
 
+#define MAX_SYMBOLS 288 /* largest number of symbols used by any tree type */
+#define MAX_BIT_LENGTH 15 /* largest bitlen used by any tree type */
+
 /* given the code lengths (as stored in the PNG file), 
  * generate the tree as defined by Deflate. 
  * maxbitlen is the maximum bits that a code 
@@ -32,7 +35,7 @@ bool CHuffmanTree::huffman_tree_create_lengths(
 ) {
 	unsigned tree1d[MAX_SYMBOLS];
 	unsigned blcount[MAX_BIT_LENGTH];
-	unsigned nextcode[MAX_BIT_LENGTH+1];
+	unsigned nextcode[MAX_BIT_LENGTH + 1];
 	unsigned bits, n, i;
     /*up to which node it is filled */
 	unsigned nodefilled = 0;	
@@ -40,8 +43,8 @@ bool CHuffmanTree::huffman_tree_create_lengths(
 	unsigned treepos = 0;	
 
 	/* initialize local vectors */
-	memset(blcount, 0, sizeof(blcount));
-	memset(nextcode, 0, sizeof(nextcode));
+	std::memset(blcount, 0, sizeof(blcount));
+	std::memset(nextcode, 0, sizeof(nextcode));
 
 	/*step1:count number of instances of each code length */
 	for (bits = 0; bits < this->numcodes; bits++) {

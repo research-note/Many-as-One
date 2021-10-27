@@ -16,6 +16,6 @@ class CHuffmanTree {
 		unsigned numcodes;
 };
 
-#include "CUpng.cc"
+#include "CHuffmanTree.cc"
 
 #endif

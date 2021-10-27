@@ -1,4 +1,3 @@
-#include "CUpng.hpp"
 
 CUpng::CUpng() {
 	buffer = NULL;
@@ -596,15 +595,13 @@ void CUpng::inflate_huffman(
 
 	if (btype == 1) {
 		/* fixed trees */
-		codetree
-		.setTree2d((unsigned*)FIXED_DEFLATE_CODE_TREE)
-		.setNumCodes(NUM_DEFLATE_CODE_SYMBOLS)
-		.setMaxBitLen(DEFLATE_CODE_BITLEN);
+		codetree.setTree2d((unsigned*)FIXED_DEFLATE_CODE_TREE);
+		codetree.setNumCodes(NUM_DEFLATE_CODE_SYMBOLS);
+		codetree.setMaxBitLen(DEFLATE_CODE_BITLEN);
 
-		codetreeD
-		.setTree2d((unsigned*)FIXED_DISTANCE_TREE)
-		.setNumCodes(NUM_DISTANCE_SYMBOLS)
-		.setMaxBitLen(DISTANCE_BITLEN);
+		codetreeD.setTree2d((unsigned*)FIXED_DISTANCE_TREE);
+		codetreeD.setNumCodes(NUM_DISTANCE_SYMBOLS);
+		codetreeD.setMaxBitLen(DISTANCE_BITLEN);
 	} else if (btype == 2) {
 		/* dynamic trees */
 		unsigned codelengthcodetree_buffer[
@@ -612,18 +609,17 @@ void CUpng::inflate_huffman(
 		];
 		CHuffmanTree codelengthcodetree;
 
-		codetree.setTree2d(codetree_buffer)
-		.setNumCodes(NUM_DEFLATE_CODE_SYMBOLS)
-		.setMaxBitLen(DEFLATE_CODE_BITLEN);
+		codetree.setTree2d(codetree_buffer);
+		codetree.setNumCodes(NUM_DEFLATE_CODE_SYMBOLS);
+		codetree.setMaxBitLen(DEFLATE_CODE_BITLEN);
 
-		codetreeD.setTree2d(codetreeD_buffer)
-		.setNumCodes(NUM_DISTANCE_SYMBOLS)
-		.setMaxBitLen(DISTANCE_BITLEN);
+		codetreeD.setTree2d(codetreeD_buffer);
+		codetreeD.setNumCodes(NUM_DISTANCE_SYMBOLS);
+		codetreeD.setMaxBitLen(DISTANCE_BITLEN);
 
-		codelengthcodetree
-		.setTree2d(codelengthcodetree_buffer)
-		.setNumCodes(NUM_CODE_LENGTH_CODES)
-		.setMaxBitLen(CODE_LENGTH_BITLEN);
+		codelengthcodetree.setTree2d(codelengthcodetree_buffer);
+		codelengthcodetree.setNumCodes(NUM_CODE_LENGTH_CODES);
+		codelengthcodetree.setMaxBitLen(CODE_LENGTH_BITLEN);
 
 		get_tree_inflate_dynamic(
 			codetree, 
@@ -920,7 +916,7 @@ void CUpng::get_tree_inflate_dynamic(
 	}
 }
 
-unsigned char read_bit(
+unsigned char CUpng::read_bit(
 	unsigned long *bitpointer, 
 	const unsigned char *bitstream
 ) {
