@@ -1,14 +1,18 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
 
 cc_library(
-    name = "parser",
-    hdrs = ["Parser.hpp", "Parser.cc"],
+    name = "bin",
+    hdrs = [
+        "CHuffmanTree.hpp", "CHuffmanTree.cc",
+        "CParser.hpp", "CParser.cc",
+        "CUpng.hpp", "CUpng.cc",
+    ],
 )
 
 cc_binary(
     name = "example",
     srcs = ["example.cc"],
     deps = [
-        ":parser"
-    ]
+        ":bin"
+    ],
 )
