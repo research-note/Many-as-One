@@ -13,27 +13,39 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-#include "main/CParser.hpp"
 #include <iostream>
+#include <string>
+
+#include "main/CParser.hpp"
 
 using namespace std;
 
-int main(void)
-{
+int main(int argc, char *argv[]) {
 	CParser parser;
-    
-    // mnist
-	parser.loadMnist();
 
-    cout<<fixed;
-    cout.precision(1);
-    for (int i=0; i<28; ++i) {
-        for (int j=0; j<28; ++j) {
-            cout << test_image[0][(i * 28) + j] << " ";
+    string mnist("mnist");
+    if(0 == mnist.compare(argv[1])) {
+        parser.loadMnist();
+
+        cout<<fixed;
+        cout.precision(1);
+        for (int i=0; i<28; ++i) {
+            for (int j=0; j<28; ++j) {
+                cout << test_image[0][(i * 28) + j] << " ";
+            }
+            cout << endl;
         }
-        cout << endl;
     }
 
+    string png("png");
+    if(0 == png.compare(argv[1])) {
+        parser.loadPng("./png_data/fruits.png");
+    }
+
+    // string grey("grey");
+    // if(0 == png.compare(argv[1])) {
+    //     parser.loadPng("./png_data/fruits.png");
+    // }
 
     // // png
     // parser.loadPng("./png_data/fruits.png");
