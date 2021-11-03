@@ -15,6 +15,7 @@ cc_library(
         "net.hpp",
         "shared_state.hpp",
         "websocket_session.hpp",
+        "Controller.hpp",
     ],
 )
 
