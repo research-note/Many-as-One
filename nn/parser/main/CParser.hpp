@@ -16,11 +16,13 @@ limitations under the License.
 #ifndef _NN_CLASS_PARSER_HPP_
 #define _NN_CLASS_PARSER_HPP_
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
 #include <unistd.h>
 #include <fcntl.h>
 #include <string>
+#include <iostream>
+
 #include "CUpng.hpp"
 
 using namespace std;

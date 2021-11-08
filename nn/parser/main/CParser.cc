@@ -125,11 +125,20 @@ void CParser::loadPng(string fileName) {
 
 		for (y = 0; y < height; ++y) {
 			for (x = 0; x < width; ++x) {
-				printf("( ");
+                unsigned int index = (y * width + x) * depth;
+				/* printf("( ");
 				for (d = 0; d < depth; ++d) {
-					printf("%d ", upng.buffer[y * width * depth + x * depth + d]);
+					printf("%d ", upng.buffer[index + d]);
 				}
-				printf(") ");
+                printf(") -> "); */
+                // Y = 0.299 * R + 0.587 * G + 0.114 * B
+                float val = 0.0;
+                val += 0.299 * upng.buffer[index];
+                val += 0.587 * upng.buffer[index + 1];
+                val += 0.114 * upng.buffer[index + 2];
+                val /= 256;
+
+                std::cout << "(" << val << ") " << std::endl;
 			}
 		}
 		printf("\n\n-\n\n");

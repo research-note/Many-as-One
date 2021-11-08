@@ -32,10 +32,19 @@ namespace controller {
 
 std::map<std::string, std::function<int(std::string t)>> m {
     {
-        "test",
+        "mnist",
         [](std::string message) -> int {
-            std::system("cd ../parser && ./bazel-bin/main/example mnist > example.txt");
-            std::cout << std::ifstream("../parser/example.txt").rdbuf();
+            std::system("cd ../parser && ./bazel-bin/main/example mnist > mnist.txt");
+            std::cout << std::ifstream("../parser/mnist.txt").rdbuf();
+
+            return 0;
+        }
+    },
+        {
+        "grey",
+        [](std::string message) -> int {
+            std::system("cd ../parser && ./bazel-bin/main/example grey > grey.txt");
+            std::cout << std::ifstream("../parser/grey.txt").rdbuf();
 
             return 0;
         }
