@@ -83,6 +83,14 @@ namespace db {
         Status addRow(std::vector<std::shared_ptr<db::GenValue>> values);
 
         /**
+         * Update a row of values -- specified columns in constructor and each values.
+         * @param values
+         */
+        Status updateRow(std::shared_ptr<db::TableCursor> tc,
+                        std::vector<std::string> names,
+                        std::vector<std::shared_ptr<db::GenValue>> values);
+
+        /**
          * Dump table for debugging
          */
         Status dump() const;

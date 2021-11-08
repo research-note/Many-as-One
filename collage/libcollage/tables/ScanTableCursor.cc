@@ -56,6 +56,20 @@ ScanTableCursor::getLongColumn(std::string colName)
     return std::dynamic_pointer_cast<BaseColumnCursor<db::LongType>>(_cursors[colName]);
 }
 
+std::shared_ptr<BaseColumnCursor<db::HalfFloatType>>
+ScanTableCursor::getHalfFloatColumn(std::string colName)
+{
+    if (_cursors.count(colName) == 0) return nullptr;
+    return std::dynamic_pointer_cast<BaseColumnCursor<db::HalfFloatType>>(_cursors[colName]);
+}
+
+std::shared_ptr<BaseColumnCursor<db::FloatType>>
+ScanTableCursor::getFloatColumn(std::string colName)
+{
+    if (_cursors.count(colName) == 0) return nullptr;
+    return std::dynamic_pointer_cast<BaseColumnCursor<db::FloatType>>(_cursors[colName]);
+}
+
 std::shared_ptr<BaseColumnCursor<db::DoubleType>>
 ScanTableCursor::getDoubleColumn(std::string colName)
 {
@@ -74,20 +88,28 @@ bool
 ScanTableCursor::addColumn(std::shared_ptr<arrow::ChunkedArray> column, const std::string& column_name, db::ColumnEncoding encoding)
 {
     switch (column->type()->id()) {
-        case arrow::Type::INT64: {
-            _cursors[column_name] = BaseColumnCursor<db::LongType>::makeCursor(column, encoding, *this);
-            return true;
-        }
-        case arrow::Type::DOUBLE: {
-            _cursors[column_name] = BaseColumnCursor<db::DoubleType>::makeCursor(column, encoding, *this);
-            return true;
-        }
-        case arrow::Type::STRING: {
-            _cursors[column_name] = BaseColumnCursor<db::StringType>::makeCursor(column, encoding, *this);
-            return true;
-        }
-        default:
-            return false;
+    case arrow::Type::INT64:
+        _cursors[column_name] = BaseColumnCursor<db::LongType>::makeCursor(column, encoding, *this);
+        return true;
+
+    case arrow::Type::HALF_FLOAT:
+        _cursors[column_name] = BaseColumnCursor<db::HalfFloatType>::makeCursor(column, encoding, *this);
+        return true;
+
+    case arrow::Type::FLOAT:
+        _cursors[column_name] = BaseColumnCursor<db::FloatType>::makeCursor(column, encoding, *this);
+        return true;
+
+    case arrow::Type::DOUBLE:
+        _cursors[column_name] = BaseColumnCursor<db::DoubleType>::makeCursor(column, encoding, *this);
+        return true;
+    
+    case arrow::Type::STRING:
+        _cursors[column_name] = BaseColumnCursor<db::StringType>::makeCursor(column, encoding, *this);
+        return true;
+    
+    default:
+        return false;
     }
 
 }

@@ -535,7 +535,6 @@ TEST_F(TableTest, Nulls) {
 } */
 
 /* TEST_F(TableTest, Memory) {
-
     arrow::MemoryPool *pool = arrow::default_memory_pool();
 
     EXPECT_EQ(0, pool->bytes_allocated());
@@ -548,7 +547,6 @@ TEST_F(TableTest, Nulls) {
     dbTable.reset();
 
     EXPECT_EQ(0, pool->bytes_allocated());
-
 } */
 
 //

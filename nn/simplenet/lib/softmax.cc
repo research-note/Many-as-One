@@ -14,6 +14,7 @@ limitations under the License.
 ==============================================================================*/
 
 #include <iostream>
+#include <execution>
 #include <algorithm>
 #include <numeric>
 #include <complex>
@@ -27,14 +28,14 @@ T softmax(T x) {
     auto maxsub = [max](auto v) -> auto {
         return v - *max;
     };
-    std::transform(std::execution::par, x.begin(), x.end(), 
+    std::transform(std::execution::par, x.begin(), x.end(),
         x.begin(), [maxsub](auto v) -> auto {
             return std::exp(maxsub(v));
         });
 
     auto sum = std::reduce(std::execution::par,
         x.cbegin(), x.cend(), 0.0);
-    std::transform(std::execution::par, x.begin(), x.end(), 
+    std::transform(std::execution::par, x.begin(), x.end(),
         x.begin(), [sum](auto v) {
             return v / sum;
         });

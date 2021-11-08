@@ -18,14 +18,14 @@ A fairly typical implementation model is used for operators: composable iterator
 (here called table cursors) are used to process queries against tables.
 
 The core mechanism for abstracting away Arrow's data structures can be seen in the files
-[libdb/columns/ChunkedColumnCursor.h](libdb/columns/ChunkedColumnCursor.h)
+[libcollage/columns/ChunkedColumnCursor.hpp](libcollage/columns/ChunkedColumnCursor.hpp)
 and
-[libdb/columns/ChunkedColumnCursor.cpp](libdb/columns/ChunkedColumnCursor.cpp),
+[libcollage/columns/ChunkedColumnCursor.cc](libcollage/columns/ChunkedColumnCursor.cc),
 where the multiple chunks that comprise a column are hidden behind a uniform interface, including a `seek()` method.
 
 Another abstraction mechanism for easily populating tables with data can be seen in
-[libdb/tables/DBTable.h](libdb/tables/DBTable.h)
-and [libdb/tables/DBTable.cpp](libdb/tables/DBTable.cpp)
+[libcollage/tables/DBTable.hpp](libcollage/tables/DBTable.hpp)
+and [libcollage/tables/DBTable.cc](libcollage/tables/DBTable.cc)
 
 # Install
 
@@ -65,7 +65,7 @@ Install Google Test
 
 Install using Homebrew.
 
-```
+```zsh
  brew install apache-arrow apache-arrow-glib googletest
 ```
 
@@ -203,12 +203,12 @@ Then call `isNull()` on a column cursor to check before attempting to obtain a n
 To allocate an table within a specific memory pool, pass the pool as an optional extra parameter to the
 `DBTable::create()` call.
 
-## Error handling is similar to that in Arrow. See [libdb/core/Status.h](libdb/core/Status.h).
+## Error handling is similar to that in Arrow. See [libcollage/core/Status.hpp](libcollage/core/Status.hpp).
 
 ## More Examples
 
-See the unit tests in [testdb/TableTest.cpp](testdb/TableTest.cpp) for more examples of how to use the query
-framework, and the test setup code in [testdb/Tables.cpp](testdb/Tables.cpp) for more examples of creating and
+See the unit tests in [test/TableTest.cc](test/TableTest.cc) for more examples of how to use the query
+framework, and the test setup code in [test/Tables.cc](test/Tables.cc) for more examples of creating and
 populating tables.
 
 # Things Not Yet Investigated

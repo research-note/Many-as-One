@@ -24,7 +24,7 @@ namespace db {
      * THe data type of a column
      */
     enum class ColumnType {
-        STRING, LONG, DOUBLE
+        STRING, LONG, HALF_FLOAT, FLOAT, DOUBLE
     };
 
     /**
@@ -80,6 +80,34 @@ namespace db {
     };
 
     /**
+     * Half Float precision column type.
+     */
+    class HalfFloatType : public DataType  {
+    public:
+        using ArrayType = arrow::NumericArray<arrow::HalfFloatType>;
+        using ElementType = arrow::HalfFloatType::c_type;
+        using BuilderType = arrow::HalfFloatBuilder;
+        using DictionaryBuilderType = arrow::HalfFloatBuilder;
+        const ColumnType TYPE_ID = ::db::ColumnType::HALF_FLOAT;
+        ColumnType id() override { return TYPE_ID; };
+        std::shared_ptr<arrow::DataType> getArrowType() override { return arrow::float16(); }
+    };
+
+    /**
+     * Float precision column type.
+     */
+    class FloatType : public DataType  {
+    public:
+        using ArrayType = arrow::NumericArray<arrow::FloatType>;
+        using ElementType = arrow::FloatType::c_type;
+        using BuilderType = arrow::FloatBuilder;
+        using DictionaryBuilderType = arrow::FloatBuilder;
+        const ColumnType TYPE_ID = ::db::ColumnType::FLOAT;
+        ColumnType id() override { return TYPE_ID; };
+        std::shared_ptr<arrow::DataType> getArrowType() override { return arrow::float32(); }
+    };
+
+    /**
      * Double precision column type.
      */
     class DoubleType : public DataType  {
@@ -105,6 +133,18 @@ namespace db {
      * @return
      */
     std::shared_ptr<DataType> long_type();
+
+    /**
+     * Create a half float precision type element (for specifying a table type)
+     * @return
+     */
+    std::shared_ptr<DataType> half_float_type();
+
+    /**
+     * Create a float precision type element (for specifying a table type)
+     * @return
+     */
+    std::shared_ptr<DataType> float_type();
 
     /**
      * Create a double precision type element (for specifying a table type)
@@ -144,6 +184,20 @@ namespace db {
      * @return
      */
     std::shared_ptr<GenValue> long_val(int64_t i);
+
+    /**
+     * Create float16 value suitable for passing into addRow().
+     * @param hf
+     * @return
+     */
+    std::shared_ptr<GenValue> half_float_val(float hf);
+
+    /**
+     * Create float32 value suitable for passing into addRow().
+     * @param f
+     * @return
+     */
+    std::shared_ptr<GenValue> float_val(float f);
 
     /**
      * Create float64 value suitable for passing into addRow().

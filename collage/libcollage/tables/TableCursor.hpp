@@ -60,6 +60,20 @@ namespace db {
         virtual std::shared_ptr<BaseColumnCursor<db::LongType>> getLongColumn(std::string colName) = 0;
 
         /**
+         * Get access to the specified Half Float type column, always synchronized with this cursor's position.
+         * @param colName
+         * @return
+         */
+        virtual std::shared_ptr<BaseColumnCursor<db::HalfFloatType>> getHalfFloatColumn(std::string colName) = 0;
+
+        /**
+         * Get access to the specified Float type column, always synchronized with this cursor's position.
+         * @param colName
+         * @return
+         */
+        virtual std::shared_ptr<BaseColumnCursor<db::FloatType>> getFloatColumn(std::string colName) = 0;
+
+        /**
          * Get access to the specified Double type column, always synchronized with this cursor's position.
          * @param colName
          * @return

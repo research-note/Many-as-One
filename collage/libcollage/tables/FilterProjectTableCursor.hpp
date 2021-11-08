@@ -38,6 +38,10 @@ namespace db {
 
         std::shared_ptr<BaseColumnCursor<db::LongType>> getLongColumn(std::string colName) override;
 
+        std::shared_ptr<BaseColumnCursor<db::HalfFloatType>> getHalfFloatColumn(std::string colName) override;
+
+        std::shared_ptr<BaseColumnCursor<db::FloatType>> getFloatColumn(std::string colName) override;
+
         std::shared_ptr<BaseColumnCursor<db::DoubleType>> getDoubleColumn(std::string colName) override;
 
         std::shared_ptr<GenericColumnCursor> getColumn(std::string colName) override;

@@ -33,6 +33,18 @@ LessThanFilter<db::LongType>::initialize(TableCursor &table_cursor) {
 
 template<>
 void
+LessThanFilter<db::HalfFloatType>::initialize(TableCursor &table_cursor) {
+    _cursor = table_cursor.getHalfFloatColumn(_column_name);
+}
+
+template<>
+void
+LessThanFilter<db::FloatType>::initialize(TableCursor &table_cursor) {
+    _cursor = table_cursor.getFloatColumn(_column_name);
+}
+
+template<>
+void
 LessThanFilter<db::DoubleType>::initialize(TableCursor &table_cursor) {
     _cursor = table_cursor.getDoubleColumn(_column_name);
 }

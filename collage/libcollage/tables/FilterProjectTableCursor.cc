@@ -39,6 +39,18 @@ FilterProjectTableCursor::getLongColumn(std::string colName)
     return std::dynamic_pointer_cast<BaseColumnCursor<db::LongType>>(_source_cursor.getLongColumn(colName));
 }
 
+std::shared_ptr<BaseColumnCursor<db::HalfFloatType>>
+FilterProjectTableCursor::getHalfFloatColumn(std::string colName)
+{
+    return std::dynamic_pointer_cast<BaseColumnCursor<db::HalfFloatType>>(_source_cursor.getHalfFloatColumn(colName));
+}
+
+std::shared_ptr<BaseColumnCursor<db::FloatType>>
+FilterProjectTableCursor::getFloatColumn(std::string colName)
+{
+    return std::dynamic_pointer_cast<BaseColumnCursor<db::FloatType>>(_source_cursor.getFloatColumn(colName));
+}
+
 std::shared_ptr<BaseColumnCursor<db::DoubleType>>
 FilterProjectTableCursor::getDoubleColumn(std::string colName)
 {

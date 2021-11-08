@@ -28,6 +28,18 @@ db::long_type()
 }
 
 std::shared_ptr<db::DataType>
+db::half_float_type()
+{
+    return std::make_shared<::db::HalfFloatType>();
+}
+
+std::shared_ptr<db::DataType>
+db::float_type()
+{
+    return std::make_shared<::db::FloatType>();
+}
+
+std::shared_ptr<db::DataType>
 db::double_type()
 {
     return std::make_shared<::db::DoubleType>();
@@ -37,6 +49,18 @@ std::shared_ptr<db::GenValue>
 db::long_val(int64_t i)
 {
     return std::make_shared<::db::Value<int64_t>>(i);
+}
+
+std::shared_ptr<db::GenValue>
+db::half_float_val(float d)
+{
+    return std::make_shared<::db::Value<float>>(d);
+}
+
+std::shared_ptr<db::GenValue>
+db::float_val(float d)
+{
+    return std::make_shared<::db::Value<float>>(d);
 }
 
 std::shared_ptr<db::GenValue>

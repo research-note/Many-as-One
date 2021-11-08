@@ -14,6 +14,8 @@ limitations under the License.
 ==============================================================================*/
 
 #include <iostream>
+#include <execution>
+#include <algorithm>
 
 #include "DBTable.hpp"
 
@@ -22,13 +24,11 @@ using arrow::Field;
 
 using namespace db;
 
-DBTable::DBTable(
-        std::vector<std::string> names,
-        std::vector<std::shared_ptr<db::DataType>> types,
-        std::vector<db::ColumnEncoding> encodings,
-        arrow::MemoryPool *pool)
+DBTable::DBTable(std::vector<std::string> names,
+                std::vector<std::shared_ptr<db::DataType>> types,
+                std::vector<db::ColumnEncoding> encodings,
+                arrow::MemoryPool *pool)
 {
-
     _encodings = encodings;
 
     std::vector<std::shared_ptr<arrow::Field>> schema_vector;
@@ -59,16 +59,14 @@ DBTable::DBTable(
     }
 
     _schema = std::make_shared<arrow::Schema>(schema_vector);
-
 }
 
 Status
-DBTable::create(
-        std::vector<std::string> names,
-        std::vector<std::shared_ptr<db::DataType>> types,
-        std::vector<db::ColumnEncoding> encodings,
-        std::shared_ptr<DBTable> *table,
-        arrow::MemoryPool *pool)
+DBTable::create(std::vector<std::string> names,
+                std::vector<std::shared_ptr<db::DataType>> types,
+                std::vector<db::ColumnEncoding> encodings,
+                std::shared_ptr<DBTable> *table,
+                arrow::MemoryPool *pool)
 {
 
     if ((names.size() != types.size()) || (names.size() != encodings.size())) {
@@ -94,17 +92,18 @@ DBTable::checkCompatible(std::shared_ptr<db::DataType> dataType,
                          db::ColumnEncoding encoding)
 {
     switch (dataType->id()) {
-        case ColumnType::DOUBLE:
-            if (encoding == ColumnEncoding::PLAIN) {
-                return Status::OK();
-            } else {
-                return Status(StatusCode::InvalidColumn);
-            }
-        case ColumnType::LONG:
+    case ColumnType::DOUBLE:
+        if (encoding == ColumnEncoding::PLAIN) {
             return Status::OK();
-        case ColumnType::STRING:
-            return Status::OK();
+        } else {
+            return Status(StatusCode::InvalidColumn);
+        }
+    case ColumnType::LONG:
+        return Status::OK();
+    case ColumnType::STRING:
+        return Status::OK();
     }
+
     return Status(StatusCode::InternalError);
 }
 
@@ -116,6 +115,27 @@ DBTable::addRow(std::vector<std::shared_ptr<db::GenValue>> values)
         auto v = values.at(i);
         DB_RETURN_NOT_OK(builder->add(v));
     }
+
+    return Status::OK();
+}
+
+Status
+DBTable::updateRow(std::shared_ptr<db::TableCursor> tc,
+                    std::vector<std::string> names,
+                    std::vector<std::shared_ptr<db::GenValue>> values)
+{
+    // if(names.size() != values.size()) {
+    //     return Status::invalidColumn();
+    // }
+
+    // for (size_t i = 0; i < names.size(); i++) {
+    //     std::shared_ptr<GenericColumnCursor> col = tc->getColumn(names.at(i));
+    //     std::cout << '[' << i << ']' << " Update From: " 
+    //         << names.at(i) << ':' << values.at(i) << '\n';
+    //     std::cout << '[' << i << ']' << " Update To: " 
+    //         << names.at(i) << ':' << values.at(i) << '\n';
+    // }
+
     return Status::OK();
 }
 
@@ -156,35 +176,30 @@ DBTable::dump() const
 {
     for (int i = 0; i < _table->num_columns(); i++) {
         std::shared_ptr<arrow::ChunkedArray> col = _table->column(i);
-        std::cout << "*** COLUMN " << i << " : " << _table->field(i)->name() << std::endl;
-        std::cout << "Num chunks: " << col->num_chunks() << std::endl;
+        std::cout << "*** COLUMN " << i << " : " << _table->field(i)->name() << '\n';
+        std::cout << "Num chunks: " << col->num_chunks() << '\n';
         for (int c = 0; c < col->num_chunks(); c++) {
             std::cout << "Chunk " << c
                       << " length: " << col->chunk(c)->length()
                       << " null count: " << col->chunk(c)->null_count()
-                    << std::endl;
+                      << '\n';
             std::shared_ptr<arrow::DictionaryArray> da = std::dynamic_pointer_cast<arrow::DictionaryArray>(
                     col->chunk(c));
             if (da == nullptr) {
-                std::cout << "SIMPLE array length: " << col->chunk(c) << std::endl;
+                std::cout << "SIMPLE array length: " << col->chunk(c) << '\n';
             } else {
-                std::cout << "CHUNKED dict array: " << da.get() << std::endl;
-
-                std::cout << "dict array length: " << da->length() << std::endl;
-                std::cout << "dict array dict length: " << da->dictionary()->length() << std::endl;
-                std::cout << "dict array indices length: " << da->indices()->length() << std::endl;
-
-                std::cout << "dict array dictionary type: " << da->dictionary()->type_id() << std::endl;
-
-                std::cout << "dict array indices type: " << da->indices()->type_id() << std::endl;
+                std::cout << "CHUNKED dict array: " << da.get() << '\n';
+                std::cout << "dict array length: " << da->length() << '\n';
+                std::cout << "dict array dict length: " << da->dictionary()->length() << '\n';
+                std::cout << "dict array indices length: " << da->indices()->length() << '\n';
+                std::cout << "dict array dictionary type: " << da->dictionary()->type_id() << '\n';
+                std::cout << "dict array indices type: " << da->indices()->type_id() << '\n';
 
                 std::shared_ptr<arrow::StringArray> stringDict =
                         std::dynamic_pointer_cast<arrow::StringArray>(da->dictionary());
-                if (stringDict == nullptr) {
-
-                } else {
+                if (stringDict != nullptr) {
                     for (int de = 0; de < stringDict->length(); de++) {
-                        std::cout << "Dict entry " << de << " : " << stringDict->GetString(de) << std:: endl;
+                        std::cout << "Dict entry " << de << " : " << stringDict->GetString(de) << '\n';
                     }
                 }
 
@@ -193,20 +208,18 @@ DBTable::dump() const
                 if (indices != nullptr) {
                     for (int ie = 0; ie < indices->length(); ie++) {
                         if (indices->IsNull(ie)) {
-                            std::cout << "Index entry " << ie << " : IS NULL" << std:: endl;
+                            std::cout << "Index entry " << ie << " : IS NULL" << '\n';
                         } else {
-                            std::cout << "Index entry " << ie << " : " << (int)indices->Value(ie) << std:: endl;
+                            std::cout << "Index entry " << ie << " : " << (int)indices->Value(ie) << '\n';
                         }
 
                     }
                 }
 
-
             }
         }
 
     }
+
     return Status::OK();
-
-
 }

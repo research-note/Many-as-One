@@ -120,5 +120,7 @@ ChunkedColumnCursor<T>::advance_chunk() {
 };
 
 template class db::ChunkedColumnCursor<db::LongType>;
+template class db::ChunkedColumnCursor<db::HalfFloatType>;
+template class db::ChunkedColumnCursor<db::FloatType>;
 template class db::ChunkedColumnCursor<db::DoubleType>;
 template class db::ChunkedColumnCursor<db::StringType>;
