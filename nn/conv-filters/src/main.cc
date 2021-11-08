@@ -10,24 +10,9 @@
 
 using namespace std;
 
-void job() {
- 
-}
-
 int main(int argc, char *argv[]) {
     int w_size, bias; 
     cin >> w_size >> bias;
-
-    /**
-     * Core per N threads
-     */ 
-    // unsigned nb_threads_hint = std::thread::hardware_concurrency();
-    // unsigned nb_threads = nb_threads_hint ? 16 : (nb_threads_hint);
-    // std::vector<std::thread> my_threads(nb_threads);
-
-    // unsigned batch_size = nb_elements / nb_threads;
-    // unsigned batch_remainder = nb_elements % nb_threads;
-
     /**
      * input the image kernel matrix
      */ 
@@ -37,7 +22,7 @@ int main(int argc, char *argv[]) {
                 return v;
             }, kernel);
 
-    std::vector<filter*> filters;
+    vector<filter*> filters;
     array<unsigned int, 3> rgb = {0, 1, 2};
     for_each(std::execution::par, rgb.begin(), rgb.end(),
         [w_size, bias, kernel, &filters](auto idx) {
@@ -76,49 +61,52 @@ int main(int argc, char *argv[]) {
     ofile << num_images << " "; 
     cerr << num_images << " "; 
 
-    conv_layer clayer(width, height, depth, w_size, stride, 
-                                padding, filters.size()); 
+    /* vector<tensor> inputs(num_images);
+    std::fill(v.begin(), v.end(), vector<tensor>(width, matrix(height, v(depth))); &*/
     tensor input(width, matrix(height, v(depth)));
+    conv_layer clayer(width, height, depth, w_size, stride, 
+                                padding, filters.size());
 
-    for (int id = 0; id < num_images; ++id) {
+    auto o_width = clayer.getWidth(), o_height = clayer.getHeight(), o_depth = clayer.getDepth();
+    // print image dimensions only the first time
+    ofile << o_width << " " << o_height 
+        << " " << o_depth << "\n";
+    cerr << o_width << " " << o_height 
+        << " " << o_depth << "\n";
 
+    for(int i = 0; i < num_images; i++) {
         // read one image
-        for (int i = 0; i < width; ++i) {
-            for (int j = 0; j < height; ++j) {
-                for (int k = 0; k < depth; ++k) {
-                    ifile >> input[i][j][k];
+        for_each(input.begin(), input.end(), [&ifile](auto &m) {
+            for_each(m.begin(), m.end(), [&ifile](auto &v) {
+                for_each(v.begin(), v.end(), [&ifile](auto &e){
+                    ifile >> e;
                     if (ifile.peek() == ',')
                         ifile.ignore();
-                }
-            }
-        }
+                });
+            });
+        });
 
-        auto output = clayer.conv2d(input, filters);
-        int o_width = get<0>(output), o_height = 
-                get<1>(output), o_depth = get<2>(output);
-        tensor out_volume = get<3>(output);
-        if (id == 0) {
-            // print image dimensions only the first time
-            ofile << o_width << " " << o_height 
-                    << " " << o_depth << "\n";
-            cerr << o_width << " " 
-                    << o_height << " " << o_depth << "\n";
-        }
+        auto start = std::chrono::steady_clock::now();
+        auto out_volume = clayer.conv2d(input, filters);
+        auto elapsed_time = std::chrono::duration_cast<std::chrono::nanoseconds> (
+            std::chrono::steady_clock::now() - start
+        );
+        std::cout << "Conv filter: " << elapsed_time.count() << "ns" << std::endl;
 
-        for (int i = 0; i < o_width; ++i) {
-            for (int j = 0; j < o_height; ++j) {
-                ofile << out_volume[i][j][0] << "," 
-                    << out_volume[i][j][1] 
-                    << "," << out_volume[i][j][2] << " ";      
-            }
+        for_each(out_volume.begin(), out_volume.end(), [&ofile](auto &m) {
+            for_each(m.begin(), m.end(), [&ofile](auto &v) {
+                ofile << v[0] << "," 
+                    << v[1] 
+                    << "," << v[2] << " ";
+            });
             ofile << "\n";
-        }
+        });
         ofile << "\n";
+
     }
+
     ifile.close();
     ofile.close();
-
-    // std::for_each(my_threads.begin(), my_threads.end(), std::mem_fn(&std::thread::join));
 
     return 0; 
 }

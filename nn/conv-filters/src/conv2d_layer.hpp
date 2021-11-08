@@ -2,7 +2,6 @@
 #define LAYER_H
 
 #include <cassert>
-#include <tuple>
 #include <algorithm>
 #include <vector>
 #include <execution>
@@ -29,9 +28,21 @@ public:
             padding(_padding),
             n_filters(n_filters) {
         // in_width + 2*padding - window should be divisible by stride
-        out_width = (in_width + 2*padding - window) / stride + 1;
-        out_height = (in_height + 2*padding - window) / stride + 1;
+        out_width = (in_width + 2 * padding - window) / stride + 1;
+        out_height = (in_height + 2 * padding - window) / stride + 1;
         out_depth = n_filters;
+    }
+
+    int getWidth() {
+        return out_width;
+    }
+
+    int getHeight() {
+        return out_height;
+    }
+
+    int getDepth() {
+        return out_depth;
     }
 
     virtual ~conv_layer() = default;
@@ -42,8 +53,8 @@ public:
      * assumed n_filters elements in filters vector
      * returns shape of the output volume and pointer to the memory block
      */ 
-    std::tuple<int, int, int, tensor> 
-        conv2d(tensor x, /*std::vector<filter> filters*/ const std::vector<filter*> &filters) {
+    tensor
+    conv2d(tensor x, /*std::vector<filter> filters*/ const std::vector<filter*> &filters) {
         tensor y(out_width, matrix(out_height, v(out_depth)));
 
         for (int i = 0, i_start = 0, i_end = 0, i_max = 0; i < out_width; ++i) {
@@ -73,7 +84,7 @@ public:
             }
         }
 
-        return std::make_tuple(out_width, out_height, out_depth, y);
+        return y;
     }
 
 };
