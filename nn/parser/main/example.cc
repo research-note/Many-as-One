@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
     if(0 == mnist.compare(argv[1])) {
         parser.loadMnist();
 
-        cout<<fixed;
+        cout << fixed;
         cout.precision(1);
         for (int i=0; i<28; ++i) {
             for (int j=0; j<28; ++j) {
@@ -41,14 +41,6 @@ int main(int argc, char *argv[]) {
     if(0 == png.compare(argv[1])) {
         parser.loadPng("./png_data/fruits.png");
     }
-
-    // string grey("grey");
-    // if(0 == png.compare(argv[1])) {
-    //     parser.loadPng("./png_data/fruits.png");
-    // }
-
-    // // png
-    // parser.loadPng("./png_data/fruits.png");
 
 	return 0;
 }
