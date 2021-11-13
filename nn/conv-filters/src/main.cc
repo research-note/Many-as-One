@@ -5,6 +5,7 @@
 #include <array>
 #include <numeric>
 #include <execution>
+#include <chrono>
 
 #include "filter.hpp"
 #include "conv2d_layer.hpp"
@@ -64,7 +65,7 @@ int main(int argc, char *argv[]) {
 
     /* vector<tensor> inputs(num_images);
     std::fill(v.begin(), v.end(), vector<tensor>(width, matrix(height, v(depth))); */
-    array<tensor, 6> inputs;
+    vector<tensor> inputs (num_images);
     fill(inputs.begin(), inputs.end(), tensor(width, matrix(height, v(depth))));
     // tensor input (width, matrix(height, v(depth)));
     /* conv_layer clayer(width, height, depth, w_size, stride, 
@@ -77,20 +78,12 @@ int main(int argc, char *argv[]) {
     auto clayer = clayers[0];
     auto o_width = clayer.getWidth(), o_height = clayer.getHeight(), o_depth = clayer.getDepth();
     // print image dimensions only the first time
-    ofile << o_width << " " << o_height 
-        << " " << o_depth << "\n";
-    cerr << o_width << " " << o_height 
-        << " " << o_depth << "\n";
-
-    // array<unsigned int, 6> indexs;
-    // iota(indexs.begin(), indexs.end(), 0);
-    /* for_each(std::execution::par_unseq,
-            indexs.begin(), inputs.end(), []() {
-        }); */
+    ofile << o_width << " " << o_height << " " << o_depth << "\n";
+    cerr << o_width << " " << o_height << " " << o_depth << "\n";
 
     // read each images in sequential
-    for_each(indexs.begin(), inputs.end(), [](auto i) {
-        for_each(inputs[i].begin(), inputs[i].end(), [&ifile](auto &m) {
+    for_each(inputs.begin(), inputs.end(), [&ifile](auto in) {
+        for_each(in.begin(), in.end(), [&ifile](auto &m) {
             for_each(m.begin(), m.end(), [&ifile](auto &v) {
                 for_each(v.begin(), v.end(), [&ifile](auto &e){
                     ifile >> e;
@@ -101,28 +94,28 @@ int main(int argc, char *argv[]) {
         });
     });
 
-    vector<tensor> outs(num_images);
+    vector<tensor> outs (num_images);
+    vector<int> idxs (num_images);
+    std::iota(idxs.begin(), idxs.end(), 0);
     for_each(std::execution::par_unseq,
-        indexs.begin(), inputs.end(), [](auto i) {
+        idxs.begin(), idxs.end(), [&filters, &inputs, &clayers, &outs](auto i) {
         auto start = std::chrono::steady_clock::now();
-        outs[i] = clayers[i].conv2d(input, filters));
-        auto elapsed_time = std::chrono::duration_cast<std::chrono::nanoseconds> (
+        outs[i] = clayers[i].conv2d(inputs[i], filters);
+        auto elapsed_time = chrono::duration_cast<std::chrono::nanoseconds> (
             std::chrono::steady_clock::now() - start
         );
-        std::cout << "Conv filter: " << elapsed_time.count() << "ns" << std::endl;
+        cout << "Conv filter: " << elapsed_time.count() << "ns" << endl;
     });
 
-    for(int i = 0; i < num_images; i++) {
-        for_each(outs[i].begin(), outs[i].end(), [&ofile](auto &m) {
-            for_each(m.begin(), m.end(), [&ofile](auto &v) {
-                ofile << v[0] << "," 
-                    << v[1] 
-                    << "," << v[2] << " ";
+    for_each(outs.begin(), outs.end(), [&ofile](auto out) {
+        for_each(out.begin(), out.end(), [&ofile](auto m) {
+            for_each(m.begin(), m.end(), [&ofile](auto v) {
+                ofile << v[0] << "," << v[1] << "," << v[2] << " ";
             });
             ofile << "\n";
         });
         ofile << "\n";
-   }
+   });
 
     ifile.close();
     ofile.close();
